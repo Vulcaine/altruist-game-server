@@ -1,0 +1,4 @@
+[submodule "libs/Altruist"]
+	path = libs/Altruist
+	url = git@github.com:Vulcaine/Altruist.git
+	branch = develop
