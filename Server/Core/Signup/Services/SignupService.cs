@@ -1,5 +1,7 @@
 using Altruist;
+
 using Microsoft.Extensions.Options;
+
 using Server.Email;
 using Server.Persistence;
 

@@ -1,4 +1,7 @@
 altruist:
+  security:
+    mode: "jwt"
+
   server:
     http:
       host: "0.0.0.0"

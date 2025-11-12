@@ -1,6 +1,7 @@
 using Altruist;
 using Altruist.Persistence;
 using Altruist.UORM;
+
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Server.Persistence;
