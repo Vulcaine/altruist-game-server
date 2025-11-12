@@ -5,7 +5,7 @@
     <ProjectReference Include="..\libs\Altruist\Altruist\Gaming\Main\Gaming.csproj" />
     <ProjectReference Include="..\libs\Altruist\Altruist\Gaming\Movement\Movement.csproj" />
     <ProjectReference Include="..\libs\Altruist\Altruist\Web\Web.csproj" />
-    <ProjectReference Include="..\libs\Altruist\Altruist\ScyllaDB\ScyllaDB.csproj" />
+    <ProjectReference Include="..\libs\Altruist\Altruist\Postgres\Postgres.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

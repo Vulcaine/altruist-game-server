@@ -1,18 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Server.Signup;
-
-public sealed class SignupRequest
-{
-    [Required, EmailAddress, MaxLength(256)]
-    public string Email { get; set; } = default!;
-
-    [Required, MinLength(8), MaxLength(100)]
-    public string Password { get; set; } = default!;
-
-    [Required, MaxLength(64)]
-    public string Username { get; set; } = default!;
-}
 
 public sealed class SignupResponse
 {

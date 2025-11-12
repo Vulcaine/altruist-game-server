@@ -5,7 +5,7 @@ altruist:
   server:
     http:
       host: "0.0.0.0"
-      port: 8080
+      port: 8000
       path: "/"
     transport:
       mode: "websocket"
@@ -14,8 +14,8 @@ altruist:
 
   persistence:
     database:
-      provider: "scylladb"
-      contact-points: ["localhost:9042"]
+      provider: "postgres"
+      connection-string: "postgresql://admin@example.com:admin@localhost:5432/altruist"
     cache:
       provider: "inmemory"
 

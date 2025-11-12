@@ -7,10 +7,22 @@ using Microsoft.Extensions.Logging;
 namespace Server.Signup;
 
 [ApiController]
-[Route("api/v1/auth/[controller]")]
+[Route("/api/v1/auth")]
 public sealed class JwtUserSessionController : JwtAuthController
 {
-    public JwtUserSessionController(JwtTokenValidator jwtTokenValidator, ILoginService loginService, TokenSessionSyncService tokenSessionSyncService, IIssuer issuer, ILoggerFactory loggerFactory) : base(jwtTokenValidator, loginService, tokenSessionSyncService, issuer, loggerFactory)
+    public JwtUserSessionController(IJwtTokenValidator jwtTokenValidator, ILoginService loginService, TokenSessionSyncService tokenSessionSyncService, IIssuer issuer, ILoggerFactory loggerFactory) : base(jwtTokenValidator, loginService, tokenSessionSyncService, issuer, loggerFactory)
     {
+    }
+
+    [HttpPost("verify")]
+    public async Task<IActionResult> Verify([FromQuery] string uid, [FromQuery] string token)
+    {
+        if (_loginService is IVerifyEmail loginService)
+        {
+            var result = await loginService.VerifyAsync(uid, token);
+            return Ok(result);
+        }
+
+        return BadRequest();
     }
 }

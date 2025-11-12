@@ -1,11 +1,13 @@
-using Altruist;
+
 using Altruist.Persistence;
+using Altruist.Security;
 using Altruist.UORM;
 
 namespace Server.Persistence;
 
 [Vault("account")]
-public class Account : VaultModel, IOnVaultCreate<Account>
+[VaultPrimaryKey("username", "email")]
+public class Account : AccountModel, IOnVaultCreate<Account>
 {
     [VaultColumnIndex]
     [VaultColumn("username")]
@@ -14,8 +16,8 @@ public class Account : VaultModel, IOnVaultCreate<Account>
     [VaultColumn("passwordHash")]
     public string PasswordHash { get; set; }
 
-    [VaultColumn("email")]
     [VaultColumnIndex]
+    [VaultColumn("email")]
     public string Email { get; set; }
 
     [VaultColumn("emailVerified")]

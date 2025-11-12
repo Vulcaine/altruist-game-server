@@ -2,6 +2,8 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 
+using Altruist;
+
 using Microsoft.Extensions.Options;
 
 namespace Server.Email;
@@ -21,6 +23,7 @@ public sealed class SmtpOptions
     public string? Password { get; set; }
 }
 
+[Service(typeof(IEmailService))]
 public sealed class SmtpEmailService : IEmailService
 {
     private readonly SmtpOptions _options;
