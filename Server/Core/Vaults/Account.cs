@@ -6,7 +6,6 @@ using Altruist.UORM;
 namespace Server.Persistence;
 
 [Vault("account")]
-[VaultPrimaryKey("username", "email")]
 public class Account : AccountModel, IOnVaultCreate<Account>
 {
     [VaultColumnIndex]

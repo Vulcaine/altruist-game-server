@@ -14,8 +14,12 @@ altruist:
 
   persistence:
     database:
-      provider: "postgres"
-      connection-string: "postgresql://admin@example.com:admin@localhost:5432/altruist"
+      provider: postgres
+      host: localhost
+      port: 5432
+      username: altruist
+      password: altruist
+      database: altruist
     cache:
       provider: "inmemory"
 
