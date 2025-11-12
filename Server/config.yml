@@ -1,8 +1,13 @@
 altruist:
   server:
-    host: "0.0.0.0"
-    port: 8080
-    transport: "websocket"
+    http:
+      host: "0.0.0.0"
+      port: 8080
+      path: "/"
+    transport:
+      mode: "websocket"
+      config:
+        path: "ws"
 
   persistence:
     database:
@@ -17,23 +22,11 @@ altruist:
       dimension: "3D"
       frequency: 30
       unit: "ticks"
-      gravity:
-        x: 0
-        y: -9.81
-
+      gravity: { x: 0, y: -9.81 }
     worlds:
-      partitioner:
-        width: 64
-        height: 64
-        depth: 64
+      partitioner: { width: 64, height: 64, depth: 64 }
       items:
         - index: 0
-          size:
-            x: 100
-            y: 100
-          gravity:
-            x: 0
-            y: 0
-          position:
-            x: 0
-            y: 0
+          size: { x: 100, y: 100 }
+          gravity: { x: 0, y: 0 }
+          position: { x: 0, y: 0 }

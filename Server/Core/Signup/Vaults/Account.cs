@@ -15,7 +15,14 @@ public class Account : VaultModel, IOnVaultCreate<Account>
     public string PasswordHash { get; set; }
 
     [VaultColumn("email")]
+    [VaultColumnIndex]
     public string Email { get; set; }
+
+    [VaultColumn("emailVerified")]
+    public bool EmailVerified { get; set; }
+
+    [VaultColumn("emailVerificationToken")]
+    public string EmailVerificationToken { get; set; }
 
     public async Task<List<Account>> OnCreateAsync(IServiceProvider serviceProvider)
     {
