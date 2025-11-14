@@ -1,5 +1,6 @@
 
 using Altruist;
+using Altruist.Persistence;
 using Altruist.Security;
 using Altruist.Security.Auth;
 
@@ -21,38 +22,55 @@ public class LoginService : ILoginService, IVerifyEmail
 {
     private readonly IVault<Account> _accountVault;
     private readonly IEmailService _emailService;
+    private readonly IPasswordHasher _passwordHasher;
     private readonly AppUrls _urls;
 
-    public LoginService(IVault<Account> accountVault, IEmailService emailService, IOptions<AppUrls> urls)
+    public LoginService(
+        IVault<Account> accountVault,
+        IEmailService emailService,
+        IPasswordHasher passwordHasher,
+        IOptions<AppUrls> urls
+    )
     {
         _accountVault = accountVault;
         _emailService = emailService;
+        _passwordHasher = passwordHasher;
         _urls = urls.Value;
     }
 
-    public Task<LoginResult> LoginAsync(LoginRequest request)
+    public async Task<LoginResult> LoginAsync(LoginRequest request)
     {
-        throw new NotImplementedException();
+        if (!(request is UsernamePasswordLoginRequest usernamePasswordLoginRequest))
+        {
+            return LoginResult.RFailure("Invalid login request. Method not supported.");
+        }
+
+        var account = await _accountVault
+             .Where(acc => acc.Username == usernamePasswordLoginRequest.Username
+                && acc.PasswordHash == _passwordHasher.Hash(usernamePasswordLoginRequest.Password))
+             .FirstAsync();
+
+        if (account != null)
+        {
+            return LoginResult.ROk(account);
+        }
+
+        return LoginResult.RFailure("Invalid username or password");
     }
+
+    [Transactional]
     public async Task<SignupResult> SignupAsync(SignupRequest request)
     {
         var existingByUsername = await _accountVault
-            .Where(acc => acc.Username == request.Username)
+            .Where(acc => acc.Username == request.Username || acc.Email == request.Email)
             .FirstOrDefaultAsync();
 
-        var existingByEmail = await _accountVault
-            .Where(acc => acc.Email == request.Email)
-            .FirstOrDefaultAsync();
 
         if (existingByUsername != null)
         {
-            var reason = "Username is already taken";
-            return SignupResult.RFailure(reason);
-        }
-
-        if (existingByEmail != null)
-        {
-            var reason = "Email is already in use";
+            var reason = existingByUsername.Username == request.Username
+                ? "Username is already in use"
+                : "Email is already in use";
             return SignupResult.RFailure(reason);
         }
 
@@ -62,7 +80,7 @@ public class LoginService : ILoginService, IVerifyEmail
         var account = new Account
         {
             Username = request.Username!,
-            PasswordHash = request.Password,
+            PasswordHash = _passwordHasher.Hash(request.Password),
             Email = request.Email!,
             EmailVerified = false,
             EmailVerificationToken = token
@@ -71,14 +89,7 @@ public class LoginService : ILoginService, IVerifyEmail
         await _accountVault.SaveAsync(account);
 
         var verifyLink = BuildVerificationLink(account.StorageId, token);
-        await _emailService.SendVerificationEmail(request.Email!, request.Username!, verifyLink);
-
-        var verification = new VerificationInfo
-        {
-            Method = "email",
-            SentTo = request.Email!,
-            ExpiresAt = expiresAt
-        };
+        VerificationInfo? verification = await SendEmailVerification(request.Email, request.Username!, verifyLink);
 
         return SignupResult.ROk(
             account,
@@ -87,6 +98,7 @@ public class LoginService : ILoginService, IVerifyEmail
         );
     }
 
+    [Transactional]
     public async Task<VerifyEmailResult> VerifyAsync(string userId, string token)
     {
         var account = await _accountVault
@@ -114,5 +126,26 @@ public class LoginService : ILoginService, IVerifyEmail
         var baseUrl = _urls.PublicBaseUrl?.TrimEnd('/') ?? "";
         var uri = $"{baseUrl}/api/v1/auth/verify?uid={Uri.EscapeDataString(userId)}&token={Uri.EscapeDataString(token)}";
         return new Uri(uri);
+    }
+
+    private async Task<VerificationInfo?> SendEmailVerification(string? email, string username, Uri verifyLink)
+    {
+        if (email == null)
+            return null;
+
+        try
+        {
+            await _emailService.SendVerificationEmail(email, username, verifyLink);
+            return new VerificationInfo
+            {
+                Method = "email",
+                SentTo = email,
+                ExpiresAt = DateTimeOffset.UtcNow.AddHours(24)
+            };
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 }
