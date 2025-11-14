@@ -23,18 +23,21 @@ public class LoginService : ILoginService, IVerifyEmail
     private readonly IVault<Account> _accountVault;
     private readonly IEmailService _emailService;
     private readonly IPasswordHasher _passwordHasher;
+    private readonly IGameSessionService _gameSessionService;
     private readonly AppUrls _urls;
 
     public LoginService(
         IVault<Account> accountVault,
         IEmailService emailService,
         IPasswordHasher passwordHasher,
+        IGameSessionService gameSessionService,
         IOptions<AppUrls> urls
     )
     {
         _accountVault = accountVault;
         _emailService = emailService;
         _passwordHasher = passwordHasher;
+        _gameSessionService = gameSessionService;
         _urls = urls.Value;
     }
 

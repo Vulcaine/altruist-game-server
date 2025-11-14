@@ -11,16 +11,13 @@ namespace Server.Signup;
 public sealed class JwtUserSessionController : JwtAuthController
 {
 
-    private readonly IGameSessionService _gameSessionService;
     public JwtUserSessionController(
         IJwtTokenValidator jwtTokenValidator,
         ILoginService loginService,
         TokenSessionSyncService tokenSessionSyncService,
-        IGameSessionService gameSessionService,
         IIssuer issuer, ILoggerFactory loggerFactory
     ) : base(jwtTokenValidator, loginService, tokenSessionSyncService, issuer, loggerFactory)
     {
-        _gameSessionService = gameSessionService;
     }
 
     [HttpPost("verify")]
