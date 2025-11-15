@@ -3,11 +3,14 @@ using Altruist.Persistence;
 using Altruist.Security;
 using Altruist.UORM;
 
+using Microsoft.Extensions.DependencyInjection;
+
 namespace Server.Persistence;
 
 [Vault("account")]
 public class Account : AccountModel, IOnVaultCreate<Account>
 {
+    [VaultUniqueColumn]
     [VaultColumnIndex]
     [VaultColumn("username")]
     public string Username { get; set; }
@@ -16,6 +19,7 @@ public class Account : AccountModel, IOnVaultCreate<Account>
     public string PasswordHash { get; set; }
 
     [VaultColumnIndex]
+    [VaultUniqueColumn]
     [VaultColumn("email")]
     public string Email { get; set; }
 
@@ -27,7 +31,8 @@ public class Account : AccountModel, IOnVaultCreate<Account>
 
     public async Task<List<Account>> OnCreateAsync(IServiceProvider serviceProvider)
     {
-        var account = new Account() { Username = "admin", PasswordHash = "admin", Email = "admin@admin.com" };
+        var passwordHasher = serviceProvider.GetRequiredService<IPasswordHasher>();
+        var account = new Account() { Username = "admin", PasswordHash = passwordHasher.Hash("admin"), Email = "admin@admin.com" };
         return await Task.FromResult(new List<Account> { account });
     }
 }

@@ -2,23 +2,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch SimpleProject",
-      "type": "coreclr",
+      "name": "Launch Server",
+      "type": "dotnet",
       "request": "launch",
-
-      // Path to dll output
       "program": "${workspaceFolder}/Server/bin/Debug/net9.0/Server.dll",
-
-      "args": [],
-      "cwd": "${workspaceFolder}",
-      "stopAtEntry": false,
-
-      // Optional: environment variables
-      "env": {
-        "DOTNET_ENVIRONMENT": "Development"
-      },
-
-      "console": "integratedTerminal"
+      "cwd": "${workspaceFolder}/Server",
     }
   ]
 }

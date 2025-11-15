@@ -8,7 +8,9 @@ altruist:
       port: 8000
       path: "/"
     transport:
-      mode: "websocket"
+      mode: websocket
+      codec:
+        provider: json
       config:
         path: "ws"
 

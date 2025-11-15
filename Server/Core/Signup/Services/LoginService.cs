@@ -43,23 +43,23 @@ public class LoginService : ILoginService, IVerifyEmail
 
     public async Task<LoginResult> LoginAsync(LoginRequest request)
     {
-        if (!(request is UsernamePasswordLoginRequest usernamePasswordLoginRequest))
-        {
+        if (request is not UsernamePasswordLoginRequest up)
             return LoginResult.RFailure("Invalid login request. Method not supported.");
-        }
 
         var account = await _accountVault
-             .Where(acc => acc.Username == usernamePasswordLoginRequest.Username
-                && acc.PasswordHash == _passwordHasher.Hash(usernamePasswordLoginRequest.Password))
-             .FirstAsync();
+            .Where(acc => acc.Username == up.Username)
+            .FirstOrDefaultAsync();
 
-        if (account != null)
+        var storedHash = account?.PasswordHash ?? "";
+        var ok = _passwordHasher.Verify(up.Password, storedHash);
+        if (!ok || account is null)
         {
-            return LoginResult.ROk(account);
+            return LoginResult.RFailure("Invalid username or password");
         }
 
-        return LoginResult.RFailure("Invalid username or password");
+        return LoginResult.ROk(account);
     }
+
 
     [Transactional]
     public async Task<SignupResult> SignupAsync(SignupRequest request)

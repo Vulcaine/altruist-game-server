@@ -90,17 +90,16 @@ public struct SelectableCharactersResult : IPacketBase
     [Key(0)]
     public PacketHeader Header { get; set; }
 
-    [JsonPropertyName("characters")]
-    [Key(1)]
-    public CharacterSummary[] Characters { get; set; }
-
     [JsonPropertyName("type")]
-    [Key(2)]
+    [Key(1)]
     public string Type { get; set; }
+
+    [JsonPropertyName("characters")]
+    [Key(2)]
+    public CharacterSummary[] Characters { get; set; }
 
     public SelectableCharactersResult()
     {
-        Header = default;
         Characters = Array.Empty<CharacterSummary>();
         Type = nameof(SelectableCharactersResult);
     }

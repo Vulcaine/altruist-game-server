@@ -8,17 +8,25 @@ namespace Server.GameSession;
 
 [SessionShield]
 [Portal("/game")]
-public class GameSession : AltruistGameSessionPortal
+public class GameSessionPortal : AltruistGameSessionPortal
 {
     private readonly IVault<Character> _characterVault;
-    public GameSession(IGameSessionService gameSessionService, IAltruistRouter router, IVault<Character> characterVault) : base(gameSessionService, router)
+    public GameSessionPortal(IGameSessionService gameSessionService, IAltruistRouter router, IVault<Character> characterVault) : base(gameSessionService, router)
     {
         _characterVault = characterVault;
     }
 
     protected override async Task<IResultPacket> OnHandshakeReceived(HandshakePacket message, string clientId, IResultPacket result)
     {
+        // TODO: send back available rooms/servers
         return result;
+    }
+
+    [Gate("available-servers")]
+    public async Task<IResultPacket> AvailableServersAsync(string clientId)
+    {
+        // TODO: send back available rooms/servers
+        return ResultPacket.Success(TransportCode.Accepted);
     }
 
     [Gate("character-selection")]
