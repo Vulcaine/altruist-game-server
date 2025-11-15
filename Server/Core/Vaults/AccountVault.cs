@@ -11,23 +11,21 @@ namespace Server.Persistence;
 public class Account : AccountModel, IOnVaultCreate<Account>
 {
     [VaultUniqueColumn]
-    [VaultColumnIndex]
     [VaultColumn("username")]
-    public string Username { get; set; }
+    public string Username { get; set; } = "";
 
     [VaultColumn("passwordHash")]
-    public string PasswordHash { get; set; }
+    public string PasswordHash { get; set; } = "";
 
-    [VaultColumnIndex]
     [VaultUniqueColumn]
     [VaultColumn("email")]
-    public string Email { get; set; }
+    public string Email { get; set; } = "";
 
     [VaultColumn("emailVerified")]
     public bool EmailVerified { get; set; }
 
     [VaultColumn("emailVerificationToken")]
-    public string EmailVerificationToken { get; set; }
+    public string EmailVerificationToken { get; set; } = "";
 
     public async Task<List<Account>> OnCreateAsync(IServiceProvider serviceProvider)
     {

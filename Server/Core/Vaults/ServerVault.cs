@@ -9,10 +9,10 @@ namespace Server.Persistence;
 public class GameServer : VaultModel, IOnVaultCreate<GameServer>
 {
     [VaultColumn("name")]
-    public string Name { get; set; }
+    public string Name { get; set; } = "localhost";
 
     [VaultColumn("host")]
-    public string Host { get; set; }
+    public string Host { get; set; } = "localhost";
 
     [VaultColumn("port")]
     public int Port { get; set; }

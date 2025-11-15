@@ -16,17 +16,17 @@ public class GameSessionPortal : AltruistGameSessionPortal
         _characterVault = characterVault;
     }
 
-    protected override async Task<IResultPacket> OnHandshakeReceived(HandshakePacket message, string clientId, IResultPacket result)
+    protected override Task<IResultPacket> OnHandshakeReceived(HandshakePacket message, string clientId, IResultPacket result)
     {
         // TODO: send back available rooms/servers
-        return result;
+        return Task.FromResult(result);
     }
 
     [Gate("available-servers")]
-    public async Task<IResultPacket> AvailableServersAsync(string clientId)
+    public Task<IResultPacket> AvailableServersAsync(string clientId)
     {
         // TODO: send back available rooms/servers
-        return ResultPacket.Success(TransportCode.Accepted);
+        return Task.FromResult<IResultPacket>(ResultPacket.Success(TransportCode.Accepted));
     }
 
     [Gate("character-selection")]
