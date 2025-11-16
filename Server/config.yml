@@ -36,6 +36,7 @@ altruist:
       partitioner: { width: 64, height: 64, depth: 64 }
       items:
         - index: 0
+          id: "world1"
           size: { x: 100, y: 100 }
           gravity: { x: 0, y: 0 }
           position: { x: 0, y: 0 }
