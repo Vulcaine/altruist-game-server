@@ -12,6 +12,9 @@ public struct JoinServerRequest
 
 public struct AvailableServerInfo
 {
+    [JsonPropertyName("id")]
+    public string Id { get; set; } = Guid.NewGuid().ToString();
+
     [JsonPropertyName("name")]
     public string Name { get; set; } = "localhost";
 
@@ -32,6 +35,7 @@ public struct AvailableServerInfo
 
     public AvailableServerInfo(GameServer server, int actiualCapacity)
     {
+        Id = server.StorageId;
         Name = server.Name;
         Host = server.Host;
         Port = server.Port;
