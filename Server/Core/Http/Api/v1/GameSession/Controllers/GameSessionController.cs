@@ -1,5 +1,3 @@
-using System.Security.Claims;
-
 using Altruist;
 using Altruist.Security;
 
@@ -11,7 +9,7 @@ using Server.Persistence;
 [JwtShield]
 [ApiController]
 [Route("/api/v1/game")]
-public sealed class GameSessionController : ControllerBase
+public sealed class GameSessionController : BaseSessionController
 {
     private readonly IVault<Character> _characterVault;
     private readonly IGameSessionService _gameSessionService;
@@ -26,16 +24,12 @@ public sealed class GameSessionController : ControllerBase
     [HttpGet("characters")]
     public async Task<IActionResult> GetAvailableCharacters()
     {
-        var principal = HttpContext.User;
-        if (principal?.Identity?.IsAuthenticated != true)
-            return Unauthorized();
-
-        var principalId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (string.IsNullOrEmpty(principalId))
+        var accountId = GetAccountId();
+        if (string.IsNullOrEmpty(accountId))
             return Unauthorized("Missing principal id.");
 
         var allCharactersForAccount = await _characterVault
-            .Where(c => c.AccountId == principalId)
+            .Where(c => c.AccountId == accountId)
             .ToListAsync();
         return Ok(allCharactersForAccount);
     }
@@ -43,7 +37,7 @@ public sealed class GameSessionController : ControllerBase
     [HttpPost("join")]
     public async Task<IActionResult> JoinGame([FromBody] JoinGameRequest request)
     {
-        // _gameSessionService.JoinGameAsync
-        return Ok();
+        // TODO: get these from config
+        return Ok(new JoinGameResponse("ws://localhost:8000/ws/game"));
     }
 }

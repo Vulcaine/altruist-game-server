@@ -17,8 +17,10 @@ public class Player : VaultModel
 [Vault("player-server-session")]
 public class PlayerServerSession : VaultModel
 {
-    [VaultColumn("player-id")]
-    public string PlayerId
+    [VaultUniqueColumn]
+    [VaultColumn("account-id")]
+    [VaultForeignKey(typeof(Account), nameof(Account.StorageId))]
+    public string AccountId
     {
         get; set;
     } = "";
@@ -35,4 +37,15 @@ public class PlayerServerSession : VaultModel
     {
         get; set;
     } = "";
+
+    [VaultColumn("expire-at")]
+    public DateTime ExpireAt { get; set; }
+
+    public PlayerServerSession(string accountId, string serverId, string sessionId, DateTime? expireAt = null)
+    {
+        AccountId = accountId;
+        ServerId = serverId;
+        SessionId = sessionId;
+        ExpireAt = expireAt ?? DateTime.UtcNow.AddDays(1);
+    }
 }
