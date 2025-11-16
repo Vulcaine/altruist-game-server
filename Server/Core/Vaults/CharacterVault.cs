@@ -5,10 +5,9 @@ using Server.Data;
 
 namespace Server.Persistence;
 
-[Vault("character")]
-public class Character : VaultModel
+public abstract class CharacterBase : VaultModel
 {
-    [VaultColumn("accountId")]
+    [VaultColumn("account-id")]
     public string AccountId { get; set; } = string.Empty;
 
     [VaultColumn("name")]
@@ -52,4 +51,20 @@ public class Character : VaultModel
 
         Properties[index] = value;
     }
+}
+
+[Vault("character-template")]
+public class CharacterTemplate : CharacterBase
+{
+    [VaultColumn("template-code")]
+    [VaultUniqueColumn]
+    public string TemplateCode { get; set; } = string.Empty;
+}
+
+[Vault("character")]
+public class Character : CharacterBase
+{
+    [VaultColumn("template-code")]
+    [VaultForeignKey(typeof(CharacterTemplate), nameof(CharacterTemplate.TemplateCode))]
+    public string TemplateCode { get; set; } = string.Empty;
 }

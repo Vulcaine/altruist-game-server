@@ -2,6 +2,7 @@ using Altruist;
 
 using Microsoft.AspNetCore.Mvc;
 
+using Server;
 using Server.Persistence;
 
 [ApiController]
@@ -19,5 +20,18 @@ public sealed class ServerController : ControllerBase
     {
         var allServers = await _serverVault.ToListAsync();
         return Ok(allServers);
+    }
+
+    [HttpPost("join")]
+    public async Task<IActionResult> JoinServer([FromBody] JoinServerRequest request)
+    {
+        var existingServer = await _serverVault
+            .Where(s => s.StorageId == request.ServerId)
+            .FirstOrDefaultAsync();
+
+        if (existingServer == null)
+            return BadRequest("Server not found");
+
+        return Ok();
     }
 }
