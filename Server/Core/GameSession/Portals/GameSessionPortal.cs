@@ -16,7 +16,7 @@ public class GameSessionPortal : AltruistGameSessionPortal
         _characterVault = characterVault;
     }
 
-    protected override Task<IResultPacket> OnHandshakeReceived(HandshakePacket message, string clientId, IResultPacket result)
+    protected override Task<IResultPacket> OnHandshakeReceived(HandshakeRequestPacket message, string clientId, IResultPacket result)
     {
         // TODO: send back available rooms/servers
         return Task.FromResult(result);

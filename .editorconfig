@@ -8,6 +8,14 @@ indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true
 
+# Indent wrapped parameters one level in from the method
+csharp_indent_method_declaration_parameter = true
+csharp_indent_method_call_parameter        = true
+
+# If a declaration is on multiple lines, keep each element on its own line
+csharp_preserve_single_line_statements = false
+csharp_preserve_single_line_blocks     = true
+
 # usings
 dotnet_separate_import_directive_groups = true
 dotnet_sort_system_directives_first = true
