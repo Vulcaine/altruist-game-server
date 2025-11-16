@@ -30,7 +30,7 @@ public sealed class ServerController : BaseSessionController
                     .Where(ps => ps.ServerId == server.StorageId)
                     .CountAsync();
 
-                return new AvailableServerInfo(server, (int)sessionCountForServer);
+                return new AvailableServerInfo(server, server.Capacity - (int)sessionCountForServer);
             }).ToArray();
 
         AvailableServerInfo[] serverInfos = await Task.WhenAll(tasks);
