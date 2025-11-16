@@ -7,7 +7,7 @@ using Server.Persistence;
 namespace Server.GameSession;
 
 [SessionShield]
-[Portal("/game")]
+[Portal("/game/v1")]
 public class GameSessionPortal : AltruistGameSessionPortal
 {
     private readonly IVault<Character> _characterVault;
