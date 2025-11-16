@@ -76,11 +76,21 @@ public sealed class ServerController : BaseSessionController
         var expired = existingSession?.ExpireAt < DateTime.UtcNow;
 
         if (existingSession != null && !expired)
-            return Ok(existingSession);
+        {
+            var existingResponse = new JoinServerResponse(
+                new AvailableServerInfo(existingServer, existingServer.Capacity - (int)sessionCountForServer),
+                existingSession
+            );
+            return Ok(existingResponse);
+        }
 
         var serverSession = new PlayerServerSession(accountId, existingServer.StorageId, Guid.NewGuid().ToString());
         await _playerServerSessonVault.SaveAsync(serverSession);
 
-        return Ok(serverSession);
+        var response = new JoinServerResponse(
+            new AvailableServerInfo(existingServer, existingServer.Capacity - (int)sessionCountForServer),
+            serverSession
+        );
+        return Ok(response);
     }
 }

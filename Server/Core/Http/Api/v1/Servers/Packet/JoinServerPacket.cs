@@ -10,6 +10,37 @@ public struct JoinServerRequest
     public string ServerId { get; set; }
 }
 
+public struct JoinServerResponse
+{
+    [JsonPropertyName("id")]
+    public string Id { get; set; }
+
+    [JsonPropertyName("host")]
+    public string Host { get; set; }
+
+    [JsonPropertyName("port")]
+    public int Port { get; set; }
+
+    [JsonPropertyName("status")]
+    public string Status { get; set; }
+
+    [JsonPropertyName("socketUrl")]
+    public string SocketUrl { get; set; }
+
+    [JsonPropertyName("sessionId")]
+    public string SessionId { get; set; }
+
+    public JoinServerResponse(AvailableServerInfo server, PlayerServerSession session)
+    {
+        Id = server.Id;
+        Host = server.Host;
+        Port = server.Port;
+        Status = server.Status;
+        SocketUrl = server.SocketUrl;
+        SessionId = session.SessionId;
+    }
+}
+
 public struct AvailableServerInfo
 {
     [JsonPropertyName("id")]

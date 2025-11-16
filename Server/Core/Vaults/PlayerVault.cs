@@ -39,7 +39,7 @@ public class PlayerServerSession : VaultModel
     } = "";
 
     [VaultColumn("expire-at")]
-    public DateTime ExpireAt { get; set; }
+    public DateTime ExpireAt { get; set; } = DateTime.UtcNow.AddDays(1);
 
     public PlayerServerSession(string accountId, string serverId, string sessionId, DateTime? expireAt = null)
     {
@@ -47,5 +47,10 @@ public class PlayerServerSession : VaultModel
         ServerId = serverId;
         SessionId = sessionId;
         ExpireAt = expireAt ?? DateTime.UtcNow.AddDays(1);
+    }
+
+    public PlayerServerSession()
+    {
+
     }
 }
