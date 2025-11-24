@@ -20,14 +20,14 @@ public interface IVerifyEmail
 [Service(typeof(ILoginService))]
 public class LoginService : ILoginService, IVerifyEmail
 {
-    private readonly IVault<Account> _accountVault;
+    private readonly IVault<AccountVault> _accountVault;
     private readonly IEmailService _emailService;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IGameSessionService _gameSessionService;
     private readonly AppUrls _urls;
 
     public LoginService(
-        IVault<Account> accountVault,
+        IVault<AccountVault> accountVault,
         IEmailService emailService,
         IPasswordHasher passwordHasher,
         IGameSessionService gameSessionService,
@@ -80,7 +80,7 @@ public class LoginService : ILoginService, IVerifyEmail
         var token = Guid.NewGuid().ToString("N");
         var expiresAt = DateTimeOffset.UtcNow.AddHours(24);
 
-        var account = new Account
+        var account = new AccountVault
         {
             Username = request.Username!,
             PasswordHash = _passwordHasher.Hash(request.Password),

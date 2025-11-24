@@ -6,7 +6,7 @@ using Altruist.UORM;
 namespace Server.Persistence;
 
 [Vault("servers")]
-public class GameServer : VaultModel, IOnVaultCreate<GameServer>
+public class GameServerVault : VaultModel, IOnVaultCreate<GameServerVault>
 {
     [VaultColumn("name")]
     public string Name { get; set; } = "localhost";
@@ -26,9 +26,9 @@ public class GameServer : VaultModel, IOnVaultCreate<GameServer>
     [VaultColumn("capacity")]
     public int Capacity { get; set; } = 50;
 
-    public Task<List<GameServer>> OnCreateAsync(IServiceProvider serviceProvider)
+    public Task<List<GameServerVault>> OnCreateAsync(IServiceProvider serviceProvider)
     {
-        var server = new GameServer() { Name = "localhost", Host = "localhost", Port = 8000, Status = "online", SocketUrl = "ws://localhost:8000/ws/game", Capacity = 50 };
-        return Task.FromResult(new List<GameServer>() { server });
+        var server = new GameServerVault() { Name = "localhost", Host = "localhost", Port = 8000, Status = "online", SocketUrl = "ws://localhost:8000/ws/game", Capacity = 50 };
+        return Task.FromResult(new List<GameServerVault>() { server });
     }
 }

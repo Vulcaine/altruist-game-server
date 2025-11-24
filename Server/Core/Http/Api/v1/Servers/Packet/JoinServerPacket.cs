@@ -64,7 +64,7 @@ public struct AvailableServerInfo
     [JsonPropertyName("capacity")]
     public int Capacity { get; set; } = 0;
 
-    public AvailableServerInfo(GameServer server, int actiualCapacity)
+    public AvailableServerInfo(GameServerVault server, int actiualCapacity)
     {
         Id = server.StorageId;
         Name = server.Name;

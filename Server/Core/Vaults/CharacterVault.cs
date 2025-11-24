@@ -54,7 +54,7 @@ public abstract class CharacterBase : VaultModel
 }
 
 [Vault("character-template")]
-public class CharacterTemplate : CharacterBase
+public class CharacterTemplateVault : CharacterBase
 {
     [VaultColumn("template-code")]
     [VaultUniqueColumn]
@@ -62,9 +62,13 @@ public class CharacterTemplate : CharacterBase
 }
 
 [Vault("character")]
-public class Character : CharacterBase
+public class CharacterVault : CharacterBase
 {
     [VaultColumn("template-code")]
-    [VaultForeignKey(typeof(CharacterTemplate), nameof(CharacterTemplate.TemplateCode))]
+    [VaultForeignKey(typeof(CharacterTemplateVault), nameof(CharacterTemplateVault.TemplateCode))]
     public string TemplateCode { get; set; } = string.Empty;
+
+    [VaultColumn("server-id")]
+    [VaultForeignKey(typeof(GameServerVault), nameof(GameServerVault.StorageId))]
+    public string ServerId { get; set; } = string.Empty;
 }

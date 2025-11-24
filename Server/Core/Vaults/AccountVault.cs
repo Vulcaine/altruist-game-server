@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Server.Persistence;
 
 [Vault("account")]
-public class Account : AccountModel, IOnVaultCreate<Account>
+public class AccountVault : AccountModel, IOnVaultCreate<AccountVault>
 {
     [VaultUniqueColumn]
     [VaultColumn("username")]
@@ -27,10 +27,10 @@ public class Account : AccountModel, IOnVaultCreate<Account>
     [VaultColumn("emailVerificationToken")]
     public string EmailVerificationToken { get; set; } = "";
 
-    public async Task<List<Account>> OnCreateAsync(IServiceProvider serviceProvider)
+    public async Task<List<AccountVault>> OnCreateAsync(IServiceProvider serviceProvider)
     {
         var passwordHasher = serviceProvider.GetRequiredService<IPasswordHasher>();
-        var account = new Account() { Username = "admin", PasswordHash = passwordHasher.Hash("admin"), Email = "admin@admin.com" };
-        return await Task.FromResult(new List<Account> { account });
+        var account = new AccountVault() { Username = "admin", PasswordHash = passwordHasher.Hash("admin"), Email = "admin@admin.com" };
+        return await Task.FromResult(new List<AccountVault> { account });
     }
 }

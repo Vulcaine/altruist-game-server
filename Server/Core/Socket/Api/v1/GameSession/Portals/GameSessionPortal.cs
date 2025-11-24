@@ -10,8 +10,8 @@ namespace Server.GameSession;
 [Portal("/game/v1")]
 public class GameSessionPortal : AltruistGameSessionPortal
 {
-    private readonly IVault<Character> _characterVault;
-    public GameSessionPortal(IGameSessionService gameSessionService, IAltruistRouter router, IVault<Character> characterVault) : base(gameSessionService, router)
+    private readonly IVault<CharacterVault> _characterVault;
+    public GameSessionPortal(IGameSessionService gameSessionService, IAltruistRouter router, IVault<CharacterVault> characterVault) : base(gameSessionService, router)
     {
         _characterVault = characterVault;
     }

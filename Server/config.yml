@@ -1,4 +1,7 @@
 altruist:
+  environment:
+    mode: "3D"
+
   security:
     mode: "jwt"
 
@@ -28,7 +31,6 @@ altruist:
   game:
     engine:
       diagnostics: true
-      dimension: "3D"
       frequency: 30
       unit: "ticks"
       gravity: { x: 0, y: -9.81 }
@@ -37,6 +39,7 @@ altruist:
       items:
         - index: 0
           id: "world1"
+          data-path: "Resources/world.json"
           size: { x: 100, y: 100 }
-          gravity: { x: 0, y: 0 }
+          gravity: { x: 0, y: -9.81 }
           position: { x: 0, y: 0 }

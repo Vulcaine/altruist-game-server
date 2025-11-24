@@ -10,10 +10,10 @@ using Server.Persistence;
 [Route("/api/v1/server")]
 public sealed class ServerController : BaseSessionController
 {
-    private readonly IVault<GameServer> _serverVault;
+    private readonly IVault<GameServerVault> _serverVault;
     private readonly IVault<PlayerServerSession> _playerServerSessonVault;
 
-    public ServerController(IVault<GameServer> serverVault, IVault<PlayerServerSession> playerServerSessonVault)
+    public ServerController(IVault<GameServerVault> serverVault, IVault<PlayerServerSession> playerServerSessonVault)
     {
         _serverVault = serverVault;
         _playerServerSessonVault = playerServerSessonVault;

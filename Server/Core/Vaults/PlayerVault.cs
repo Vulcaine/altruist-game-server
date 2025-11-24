@@ -4,13 +4,13 @@ using Altruist.UORM;
 namespace Server.Persistence;
 
 [Vault("players")]
-public class Player : VaultModel
+public class PlayerVault : VaultModel
 {
     [VaultColumn("name")]
     public string Name { get; set; } = "";
 
     [VaultColumn("character")]
-    [VaultForeignKey(typeof(Character), nameof(Character.StorageId))]
+    [VaultForeignKey(typeof(CharacterVault), nameof(CharacterVault.StorageId))]
     public string CharacterId { get; set; } = "";
 }
 
@@ -19,14 +19,14 @@ public class PlayerServerSession : VaultModel
 {
     [VaultUniqueColumn]
     [VaultColumn("account-id")]
-    [VaultForeignKey(typeof(Account), nameof(Account.StorageId))]
+    [VaultForeignKey(typeof(AccountVault), nameof(AccountVault.StorageId))]
     public string AccountId
     {
         get; set;
     } = "";
 
     [VaultColumn("server-id")]
-    [VaultForeignKey(typeof(GameServer), nameof(GameServer.StorageId))]
+    [VaultForeignKey(typeof(GameServerVault), nameof(GameServerVault.StorageId))]
     public string ServerId
     {
         get; set;
