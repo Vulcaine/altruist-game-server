@@ -1,11 +1,11 @@
 {
   "transform": {
-    "pos": {
+    "position": {
       "X": 0.0,
       "Y": 0.0,
       "Z": 0.0
     },
-    "rot": {
+    "rotation": {
       "X": 0.0,
       "Y": 0.0,
       "Z": 0.0
@@ -14,18 +14,24 @@
       "X": 1.0,
       "Y": 1.0,
       "Z": 1.0
+    },
+    "size": {
+      "X": 512.0,
+      "Y": 64.7317352,
+      "Z": 512.0
     }
   },
   "objects": [
     {
-      "id": "Playground_Triton/AutoLandscape_Ocean#94504",
+      "id": "Playground_Triton/AutoLandscape_Ocean#74724",
+      "archetype": null,
       "type": "Static",
-      "pos": {
+      "position": {
         "X": 256.0,
         "Y": 5.0,
         "Z": 256.0
       },
-      "rot": {
+      "rotation": {
         "X": 0.0,
         "Y": 0.0,
         "Z": 0.0
@@ -44,14 +50,15 @@
       "children": []
     },
     {
-      "id": "Playground_Triton/MainVillage#-2738",
+      "id": "Playground_Triton/MainVillage#-2134",
+      "archetype": null,
       "type": "Static",
-      "pos": {
+      "position": {
         "X": 161.930969,
         "Y": 15.4037189,
         "Z": 173.149292
       },
-      "rot": {
+      "rotation": {
         "X": 0.0,
         "Y": 0.0,
         "Z": 0.0
@@ -69,14 +76,15 @@
       "colliders": [],
       "children": [
         {
-          "id": "Playground_Triton/MainVillage/NHP_Rock_Pillar_Round_A1_01#-2742",
+          "id": "Playground_Triton/MainVillage/NHP_Rock_Pillar_Round_A1_01#-2138",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": -24.8240814,
             "Y": -2.382186,
             "Z": -33.5340576
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -95,14 +103,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/MainVillage/EA03_Village_OutBuilding_PentHouse_01a_PRE#-2750",
+          "id": "Playground_Triton/MainVillage/EA03_Village_OutBuilding_PentHouse_01a_PRE#-2146",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 29.74,
             "Y": -2.66,
             "Z": -28.09
           },
-          "rot": {
+          "rotation": {
             "X": 0.0484573171,
             "Y": 198.259186,
             "Z": 10.130558
@@ -120,14 +129,15 @@
           "colliders": [],
           "children": [
             {
-              "id": "Playground_Triton/MainVillage/EA03_Village_OutBuilding_PentHouse_01a_PRE/EA03_Village_OutBuilding_PentHouse_01a_LOD0#-2756",
+              "id": "Playground_Triton/MainVillage/EA03_Village_OutBuilding_PentHouse_01a_PRE/EA03_Village_OutBuilding_PentHouse_01a_LOD0#-2152",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -146,14 +156,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/MainVillage/EA03_Village_OutBuilding_PentHouse_01a_PRE/EA03_Village_OutBuilding_PentHouse_01a_LOD1#-2764",
+              "id": "Playground_Triton/MainVillage/EA03_Village_OutBuilding_PentHouse_01a_PRE/EA03_Village_OutBuilding_PentHouse_01a_LOD1#-2160",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -172,14 +183,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/MainVillage/EA03_Village_OutBuilding_PentHouse_01a_PRE/EA03_Village_OutBuilding_PentHouse_01a_LOD2#-2772",
+              "id": "Playground_Triton/MainVillage/EA03_Village_OutBuilding_PentHouse_01a_PRE/EA03_Village_OutBuilding_PentHouse_01a_LOD2#-2168",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -198,14 +210,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/MainVillage/EA03_Village_OutBuilding_PentHouse_01a_PRE/EA03_Village_OutBuilding_PentHouse_01a_LOD3#-2780",
+              "id": "Playground_Triton/MainVillage/EA03_Village_OutBuilding_PentHouse_01a_PRE/EA03_Village_OutBuilding_PentHouse_01a_LOD3#-2176",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -232,7 +245,10 @@
                     "X": -0.937359452,
                     "Y": 4.407324,
                     "Z": 0.248009443
-                  }
+                  },
+                  "radius": null,
+                  "height": null,
+                  "direction": null
                 }
               ],
               "children": []
@@ -240,14 +256,15 @@
           ]
         },
         {
-          "id": "Playground_Triton/MainVillage/EntranceArch#-2790",
+          "id": "Playground_Triton/MainVillage/EntranceArch#-2186",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": -17.8247166,
             "Y": -1.62856,
             "Z": 29.1741772
           },
-          "rot": {
+          "rotation": {
             "X": 3.20165128E-07,
             "Y": 322.14032,
             "Z": 356.9252
@@ -266,14 +283,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/MainVillage/EntranceArch (1)#-2798",
+          "id": "Playground_Triton/MainVillage/EntranceArch (1)#-2194",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 22.2421856,
             "Y": -9.309999,
             "Z": -73.8188248
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 345.000031,
             "Z": 0.0
@@ -292,14 +310,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/MainVillage/WeaponRack.001#-2806",
+          "id": "Playground_Triton/MainVillage/WeaponRack.001#-2202",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": -8.554752,
             "Y": -2.402439,
             "Z": -25.5303059
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 91.0097656,
             "Z": 0.0
@@ -318,14 +337,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/MainVillage/Wagon#-2814",
+          "id": "Playground_Triton/MainVillage/Wagon#-2210",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 47.57724,
             "Y": -3.212965,
             "Z": -10.0652618
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 14.9999714
@@ -344,14 +364,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/MainVillage/WagonWheel#-2822",
+          "id": "Playground_Triton/MainVillage/WagonWheel#-2218",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 46.8226624,
             "Y": -1.6774292,
             "Z": -6.90652466
           },
-          "rot": {
+          "rotation": {
             "X": 315.000031,
             "Y": 0.0,
             "Z": 0.0
@@ -370,14 +391,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/MainVillage/Table#-2830",
+          "id": "Playground_Triton/MainVillage/Table#-2226",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 27.41,
             "Y": -2.4024353,
             "Z": -27.74
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 13.0628424,
             "Z": 0.0
@@ -395,14 +417,15 @@
           "colliders": [],
           "children": [
             {
-              "id": "Playground_Triton/MainVillage/Table/Terrain#-2834",
+              "id": "Playground_Triton/MainVillage/Table/Terrain#-2230",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.017,
                 "Y": 0.847,
                 "Z": -0.007
               },
-              "rot": {
+              "rotation": {
                 "X": 359.022949,
                 "Y": 330.14978,
                 "Z": 359.2136
@@ -421,14 +444,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/MainVillage/Table/Table#-2842",
+              "id": "Playground_Triton/MainVillage/Table/Table#-2238",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 2.49207034E-07,
                 "Y": 266.3777,
                 "Z": -6.77132448E-07
@@ -447,14 +471,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/MainVillage/Table/Tablecloth#-2850",
+              "id": "Playground_Triton/MainVillage/Table/Tablecloth#-2246",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.006,
                 "Y": 0.269,
                 "Z": -0.002
               },
-              "rot": {
+              "rotation": {
                 "X": 358.747162,
                 "Y": 266.373169,
                 "Z": 0.4222373
@@ -475,14 +500,15 @@
           ]
         },
         {
-          "id": "Playground_Triton/MainVillage/Torch#-2858",
+          "id": "Playground_Triton/MainVillage/Torch#-2254",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 16.0141,
             "Y": -2.4024353,
             "Z": -24.6353
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -501,14 +527,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/MainVillage/EA03_Env_Rock_Slice_01a#-2866",
+          "id": "Playground_Triton/MainVillage/EA03_Env_Rock_Slice_01a#-2262",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": -13.484848,
             "Y": -6.41373253,
             "Z": 168.99231
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -526,14 +553,15 @@
           "colliders": [],
           "children": [
             {
-              "id": "Playground_Triton/MainVillage/EA03_Env_Rock_Slice_01a/EA03_Env_Rock_Slice_01a_LOD1#-2880",
+              "id": "Playground_Triton/MainVillage/EA03_Env_Rock_Slice_01a/EA03_Env_Rock_Slice_01a_LOD1#-2276",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -552,14 +580,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/MainVillage/EA03_Env_Rock_Slice_01a/EA03_Env_Rock_Slice_01a_LOD2#-2888",
+              "id": "Playground_Triton/MainVillage/EA03_Env_Rock_Slice_01a/EA03_Env_Rock_Slice_01a_LOD2#-2284",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -580,14 +609,15 @@
           ]
         },
         {
-          "id": "Playground_Triton/MainVillage/EA03_Environment_Rock_Flat_04c#-2896",
+          "id": "Playground_Triton/MainVillage/EA03_Environment_Rock_Flat_04c#-2292",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": -20.1511078,
             "Y": 0.858263,
             "Z": 167.369141
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 315.000031
@@ -605,14 +635,15 @@
           "colliders": [],
           "children": [
             {
-              "id": "Playground_Triton/MainVillage/EA03_Environment_Rock_Flat_04c/EA03_Environment_Rock_Flat_04c_LOD1#-2910",
+              "id": "Playground_Triton/MainVillage/EA03_Environment_Rock_Flat_04c/EA03_Environment_Rock_Flat_04c_LOD1#-2306",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -631,14 +662,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/MainVillage/EA03_Environment_Rock_Flat_04c/EA03_Environment_Rock_Flat_04c_LOD2#-2918",
+              "id": "Playground_Triton/MainVillage/EA03_Environment_Rock_Flat_04c/EA03_Environment_Rock_Flat_04c_LOD2#-2314",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -659,14 +691,15 @@
           ]
         },
         {
-          "id": "Playground_Triton/MainVillage/EA03_Fence_rockDesk_01g_PRE#-2926",
+          "id": "Playground_Triton/MainVillage/EA03_Fence_rockDesk_01g_PRE#-2322",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 29.6159668,
             "Y": -6.472212,
             "Z": 146.48996
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -684,14 +717,15 @@
           "colliders": [],
           "children": [
             {
-              "id": "Playground_Triton/MainVillage/EA03_Fence_rockDesk_01g_PRE/EA03_Fence_rockDesk_01g_LOD0#-2932",
+              "id": "Playground_Triton/MainVillage/EA03_Fence_rockDesk_01g_PRE/EA03_Fence_rockDesk_01g_LOD0#-2328",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -718,20 +752,24 @@
                     "X": -0.42947948,
                     "Y": 0.902690768,
                     "Z": 0.001795277
-                  }
+                  },
+                  "radius": null,
+                  "height": null,
+                  "direction": null
                 }
               ],
               "children": []
             },
             {
-              "id": "Playground_Triton/MainVillage/EA03_Fence_rockDesk_01g_PRE/EA03_Fence_rockDesk_01g_LOD1#-2942",
+              "id": "Playground_Triton/MainVillage/EA03_Fence_rockDesk_01g_PRE/EA03_Fence_rockDesk_01g_LOD1#-2338",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -750,14 +788,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/MainVillage/EA03_Fence_rockDesk_01g_PRE/EA03_Fence_rockDesk_01g_LOD2#-2950",
+              "id": "Playground_Triton/MainVillage/EA03_Fence_rockDesk_01g_PRE/EA03_Fence_rockDesk_01g_LOD2#-2346",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -778,14 +817,15 @@
           ]
         },
         {
-          "id": "Playground_Triton/MainVillage/CombatDummy.002#-2958",
+          "id": "Playground_Triton/MainVillage/CombatDummy.002#-2354",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 45.46,
             "Y": -2.34225941,
             "Z": -20.66
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 179.999969,
             "Z": 0.0
@@ -804,14 +844,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/MainVillage/CombatDummy.001#-2966",
+          "id": "Playground_Triton/MainVillage/CombatDummy.001#-2362",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 42.64229,
             "Y": -2.4024353,
             "Z": -25.7975159
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 75.00004,
             "Z": 0.0
@@ -830,14 +871,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/MainVillage/CombatDummy.003#-2974",
+          "id": "Playground_Triton/MainVillage/CombatDummy.003#-2370",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 49.02809,
             "Y": -2.40243435,
             "Z": -24.44516
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 246.983047,
             "Z": 0.0
@@ -856,14 +898,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE#-2982",
+          "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE#-2378",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": -8.20097351,
             "Y": -1.58371925,
             "Z": 16.29071
           },
-          "rot": {
+          "rotation": {
             "X": 3.390545,
             "Y": 55.1616173,
             "Z": 353.475555
@@ -881,14 +924,15 @@
           "colliders": [],
           "children": [
             {
-              "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE/EA03_Environment_RoadIsland_09a_LOD0#-2988",
+              "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE/EA03_Environment_RoadIsland_09a_LOD0#-2384",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -907,14 +951,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE/EA03_Environment_RoadIsland_09a_LOD1#-2996",
+              "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE/EA03_Environment_RoadIsland_09a_LOD1#-2392",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -933,14 +978,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE/EA03_Environment_RoadIsland_09a_LOD2#-3004",
+              "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE/EA03_Environment_RoadIsland_09a_LOD2#-2400",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -959,14 +1005,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE/EA03_Environment_RoadIsland_09a_LOD3#-3012",
+              "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE/EA03_Environment_RoadIsland_09a_LOD3#-2408",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -993,7 +1040,10 @@
                     "X": -0.273164749,
                     "Y": 0.28828457,
                     "Z": 0.454766572
-                  }
+                  },
+                  "radius": null,
+                  "height": null,
+                  "direction": null
                 }
               ],
               "children": []
@@ -1001,14 +1051,15 @@
           ]
         },
         {
-          "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE (1)#-3022",
+          "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE (1)#-2418",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 33.4690247,
             "Y": -2.46371937,
             "Z": -10.6192932
           },
-          "rot": {
+          "rotation": {
             "X": 1.0768199,
             "Y": 119.264473,
             "Z": 359.2921
@@ -1026,14 +1077,15 @@
           "colliders": [],
           "children": [
             {
-              "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE (1)/EA03_Environment_RoadIsland_09a_LOD0#-3028",
+              "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE (1)/EA03_Environment_RoadIsland_09a_LOD0#-2424",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -1052,14 +1104,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE (1)/EA03_Environment_RoadIsland_09a_LOD1#-3036",
+              "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE (1)/EA03_Environment_RoadIsland_09a_LOD1#-2432",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -1078,14 +1131,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE (1)/EA03_Environment_RoadIsland_09a_LOD2#-3044",
+              "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE (1)/EA03_Environment_RoadIsland_09a_LOD2#-2440",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -1104,14 +1158,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE (1)/EA03_Environment_RoadIsland_09a_LOD3#-3052",
+              "id": "Playground_Triton/MainVillage/EA03_Environment_RoadIsland_09a_PRE (1)/EA03_Environment_RoadIsland_09a_LOD3#-2448",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -1138,7 +1193,10 @@
                     "X": -0.273164749,
                     "Y": 0.28828457,
                     "Z": 0.454766572
-                  }
+                  },
+                  "radius": null,
+                  "height": null,
+                  "direction": null
                 }
               ],
               "children": []
@@ -1146,14 +1204,15 @@
           ]
         },
         {
-          "id": "Playground_Triton/MainVillage/Armory#-3062",
+          "id": "Playground_Triton/MainVillage/Armory#-2458",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": -0.9930115,
             "Y": -4.402439,
             "Z": -59.83651
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 269.32,
             "Z": 0.0
@@ -1172,14 +1231,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/MainVillage/Armory (1)#-3070",
+          "id": "Playground_Triton/MainVillage/Armory (1)#-2466",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 35.86197,
             "Y": -4.402439,
             "Z": -47.3982544
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 269.32,
             "Z": 0.0
@@ -1198,14 +1258,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/MainVillage/Armory#-3078",
+          "id": "Playground_Triton/MainVillage/Armory#-2474",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": -11.2516785,
             "Y": -2.4024353,
             "Z": -39.53595
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 57.76656,
             "Z": 0.0
@@ -1224,14 +1285,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/MainVillage/Armature#-3086",
+          "id": "Playground_Triton/MainVillage/Armature#-2482",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": -12.1009674,
             "Y": -0.402439117,
             "Z": -38.2493
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 132.290329,
             "Z": 0.0
@@ -1249,14 +1311,15 @@
           "colliders": [],
           "children": [
             {
-              "id": "Playground_Triton/MainVillage/Armature/Armature#-3092",
+              "id": "Playground_Triton/MainVillage/Armature/Armature#-2488",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 1.69406586E-23,
                 "Y": 0.9675061,
                 "Z": -0.010561645
               },
-              "rot": {
+              "rotation": {
                 "X": -1.70754731E-06,
                 "Y": 90.0,
                 "Z": 270.209381
@@ -1277,14 +1340,15 @@
           ]
         },
         {
-          "id": "Playground_Triton/MainVillage/Berserker#-3114",
+          "id": "Playground_Triton/MainVillage/Berserker#-2510",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 28.3790283,
             "Y": -2.40243721,
             "Z": -27.899292
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 285.000031,
             "Z": 0.0
@@ -1302,14 +1366,15 @@
           "colliders": [],
           "children": [
             {
-              "id": "Playground_Triton/MainVillage/Berserker/Mesh_Berserker#-3120",
+              "id": "Playground_Triton/MainVillage/Berserker/Mesh_Berserker#-2516",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 270.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -1330,14 +1395,15 @@
           ]
         },
         {
-          "id": "Playground_Triton/MainVillage/BuildingAttachable.008#-3338",
+          "id": "Playground_Triton/MainVillage/BuildingAttachable.008#-2734",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": -11.9926605,
             "Y": -2.40244,
             "Z": -34.3388062
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -1356,14 +1422,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/MainVillage/WeaponRack#-3346",
+          "id": "Playground_Triton/MainVillage/WeaponRack#-2742",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": -13.1199646,
             "Y": -0.422719,
             "Z": -39.3392944
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -1381,14 +1448,15 @@
           "colliders": [],
           "children": [
             {
-              "id": "Playground_Triton/MainVillage/WeaponRack/BT_Axe_002#-3350",
+              "id": "Playground_Triton/MainVillage/WeaponRack/BT_Axe_002#-2746",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": -0.1269989,
                 "Y": 0.2130003,
                 "Z": -0.4039917
               },
-              "rot": {
+              "rotation": {
                 "X": 1.06721707E-07,
                 "Y": 14.5902443,
                 "Z": 11.6201658
@@ -1407,14 +1475,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/MainVillage/WeaponRack/WeaponRack.003#-3358",
+              "id": "Playground_Triton/MainVillage/WeaponRack/WeaponRack.003#-2754",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": -0.136169434,
                 "Y": -0.0612812042,
                 "Z": 0.06034851
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 291.793579,
                 "Z": 0.0
@@ -1433,14 +1502,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/MainVillage/WeaponRack/Bow#-3366",
+              "id": "Playground_Triton/MainVillage/WeaponRack/Bow#-2762",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.143005371,
                 "Y": 0.020280838,
                 "Z": 0.178009033
               },
-              "rot": {
+              "rotation": {
                 "X": 11.6610861,
                 "Y": 281.9724,
                 "Z": -8.71766531E-07
@@ -1459,14 +1529,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/MainVillage/WeaponRack/Broadsword.004#-3374",
+              "id": "Playground_Triton/MainVillage/WeaponRack/Broadsword.004#-2770",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 6.045579,
                 "Y": 282.5446,
                 "Z": 0.0
@@ -1487,14 +1558,15 @@
           ]
         },
         {
-          "id": "Playground_Triton/MainVillage/Box.001#-3382",
+          "id": "Playground_Triton/MainVillage/Box.001#-2778",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": -13.860611,
             "Y": -2.4024353,
             "Z": -21.0614014
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -1513,14 +1585,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/MainVillage/Box.001 (1)#-3390",
+          "id": "Playground_Triton/MainVillage/Box.001 (1)#-2786",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": -13.04599,
             "Y": -2.402439,
             "Z": -20.2612915
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -1539,14 +1612,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/MainVillage/Box.001 (2)#-3398",
+          "id": "Playground_Triton/MainVillage/Box.001 (2)#-2794",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": -13.2609711,
             "Y": -2.58371925,
             "Z": -20.9813385
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 345.000031
@@ -1565,14 +1639,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/MainVillage/BuildingAttachable.006#-3406",
+          "id": "Playground_Triton/MainVillage/BuildingAttachable.006#-2802",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": -6.32096863,
             "Y": 3.74628067,
             "Z": -36.649292
           },
-          "rot": {
+          "rotation": {
             "X": 334.4828,
             "Y": 56.16868,
             "Z": -1.89211153E-06
@@ -1593,14 +1668,15 @@
       ]
     },
     {
-      "id": "Playground_Triton/OutsideCamp#-4520",
+      "id": "Playground_Triton/OutsideCamp#-1358",
+      "archetype": null,
       "type": "Static",
-      "pos": {
+      "position": {
         "X": 151.738,
         "Y": 16.262,
         "Z": 130.957
       },
-      "rot": {
+      "rotation": {
         "X": 0.0,
         "Y": 0.0,
         "Z": 0.0
@@ -1611,21 +1687,22 @@
         "Z": 1.0
       },
       "size": {
-        "X": 300.935455,
-        "Y": 23.40128,
-        "Z": 174.374847
+        "X": 300.834778,
+        "Y": 16.6862354,
+        "Z": 151.834045
       },
       "colliders": [],
       "children": [
         {
-          "id": "Playground_Triton/OutsideCamp/BoxAttachable#-4522",
+          "id": "Playground_Triton/OutsideCamp/BoxAttachable#-1360",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 141.691986,
             "Y": -9.266945,
             "Z": 11.6130066
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 39.3607941,
             "Z": 0.0
@@ -1644,14 +1721,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/OutsideCamp/ChestL.001#-4530",
+          "id": "Playground_Triton/OutsideCamp/ChestL.001#-1368",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 141.676971,
             "Y": -9.266943,
             "Z": 8.139389
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -1670,14 +1748,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/OutsideCamp/ChestS.001#-4538",
+          "id": "Playground_Triton/OutsideCamp/ChestS.001#-1376",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 139.245483,
             "Y": -9.266945,
             "Z": 10.7293854
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -1696,14 +1775,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/OutsideCamp/Box.001 (3)#-4546",
+          "id": "Playground_Triton/OutsideCamp/Box.001 (3)#-1384",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 140.492645,
             "Y": -9.266945,
             "Z": 9.286987
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -1722,14 +1802,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/OutsideCamp/Barrel.001#-4554",
+          "id": "Playground_Triton/OutsideCamp/Barrel.001#-1392",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 143.000488,
             "Y": -9.266948,
             "Z": 8.763138
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -1748,14 +1829,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/OutsideCamp/Armature (1)#-4562",
+          "id": "Playground_Triton/OutsideCamp/Armature (1)#-1400",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 143.291992,
             "Y": -9.266941,
             "Z": 10.4329987
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 113.935738,
             "Z": 0.0
@@ -1773,14 +1855,15 @@
           "colliders": [],
           "children": [
             {
-              "id": "Playground_Triton/OutsideCamp/Armature (1)/Geometry#-4568",
+              "id": "Playground_Triton/OutsideCamp/Armature (1)/Geometry#-1406",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -1798,14 +1881,15 @@
               "colliders": [],
               "children": [
                 {
-                  "id": "Playground_Triton/OutsideCamp/Armature (1)/Geometry/Armature_Mesh#-4572",
+                  "id": "Playground_Triton/OutsideCamp/Armature (1)/Geometry/Armature_Mesh#-1410",
+                  "archetype": null,
                   "type": "Static",
-                  "pos": {
+                  "position": {
                     "X": 0.0,
                     "Y": 0.0,
                     "Z": 0.0
                   },
-                  "rot": {
+                  "rotation": {
                     "X": 0.0,
                     "Y": 0.0,
                     "Z": 0.0
@@ -1828,14 +1912,15 @@
           ]
         },
         {
-          "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_01#-4854",
+          "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_01#-1692",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 147.541992,
             "Y": -9.266949,
             "Z": 11.1430054
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -1853,14 +1938,15 @@
           "colliders": [],
           "children": [
             {
-              "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_01/NHP_Rock_Cobble_A1_01_LOD0#-4860",
+              "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_01/NHP_Rock_Cobble_A1_01_LOD0#-1698",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -1879,14 +1965,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_01/NHP_Rock_Cobble_A1_01_LOD1#-4868",
+              "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_01/NHP_Rock_Cobble_A1_01_LOD1#-1706",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -1905,14 +1992,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_01/NHP_Rock_Cobble_A1_01_LOD2#-4876",
+              "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_01/NHP_Rock_Cobble_A1_01_LOD2#-1714",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -1933,14 +2021,15 @@
           ]
         },
         {
-          "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_01 (2)#-4884",
+          "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_01 (2)#-1722",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 145.112,
             "Y": -9.266946,
             "Z": 7.76300049
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 134.999969,
             "Z": 0.0
@@ -1958,14 +2047,15 @@
           "colliders": [],
           "children": [
             {
-              "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_01 (2)/NHP_Rock_Cobble_A1_01_LOD0#-4890",
+              "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_01 (2)/NHP_Rock_Cobble_A1_01_LOD0#-1728",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -1984,14 +2074,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_01 (2)/NHP_Rock_Cobble_A1_01_LOD1#-4898",
+              "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_01 (2)/NHP_Rock_Cobble_A1_01_LOD1#-1736",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -2010,14 +2101,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_01 (2)/NHP_Rock_Cobble_A1_01_LOD2#-4906",
+              "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_01 (2)/NHP_Rock_Cobble_A1_01_LOD2#-1744",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -2038,14 +2130,15 @@
           ]
         },
         {
-          "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_03#-4914",
+          "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_03#-1752",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 148.441986,
             "Y": -9.266945,
             "Z": 7.653
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -2063,14 +2156,15 @@
           "colliders": [],
           "children": [
             {
-              "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_03/NHP_Rock_Cobble_A1_03_LOD0#-4920",
+              "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_03/NHP_Rock_Cobble_A1_03_LOD0#-1758",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -2089,14 +2183,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_03/NHP_Rock_Cobble_A1_03_LOD1#-4928",
+              "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_03/NHP_Rock_Cobble_A1_03_LOD1#-1766",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -2115,14 +2210,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_03/NHP_Rock_Cobble_A1_03_LOD2#-4936",
+              "id": "Playground_Triton/OutsideCamp/NHP_Rock_Cobble_A1_03/NHP_Rock_Cobble_A1_03_LOD2#-1774",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -2143,14 +2239,15 @@
           ]
         },
         {
-          "id": "Playground_Triton/OutsideCamp/Rock_01#-4944",
+          "id": "Playground_Triton/OutsideCamp/Rock_01#-1782",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 144.812225,
             "Y": -9.266941,
             "Z": 20.4255524
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -2168,14 +2265,15 @@
           "colliders": [],
           "children": [
             {
-              "id": "Playground_Triton/OutsideCamp/Rock_01/Rock_01_LOD0#-4950",
+              "id": "Playground_Triton/OutsideCamp/Rock_01/Rock_01_LOD0#-1788",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -2194,14 +2292,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/OutsideCamp/Rock_01/Rock_01_LOD1#-4958",
+              "id": "Playground_Triton/OutsideCamp/Rock_01/Rock_01_LOD1#-1796",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -2222,14 +2321,15 @@
           ]
         },
         {
-          "id": "Playground_Triton/OutsideCamp/BuildingTorch#-5008",
+          "id": "Playground_Triton/OutsideCamp/BuildingTorch#-1846",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
           },
-          "rot": {
+          "rotation": {
             "X": 15.68928,
             "Y": 330.201019,
             "Z": 4.434071E-07
@@ -2247,14 +2347,15 @@
           "colliders": [],
           "children": [
             {
-              "id": "Playground_Triton/OutsideCamp/BuildingTorch/BuildingTorch.002#-5012",
+              "id": "Playground_Triton/OutsideCamp/BuildingTorch/BuildingTorch.002#-1850",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": -0.0279998779,
                 "Y": -0.131719589,
                 "Z": -0.300994873
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -2275,14 +2376,15 @@
           ]
         },
         {
-          "id": "Playground_Triton/OutsideCamp/Campfire#-4228",
+          "id": "Playground_Triton/OutsideCamp/Campfire#-1918",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 146.278381,
             "Y": -9.289999,
             "Z": 8.597992
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 300.321442,
             "Z": 0.0
@@ -2293,21 +2395,22 @@
             "Z": 1.0
           },
           "size": {
-            "X": 25.5626221,
-            "Y": 7.88599968,
-            "Z": 15.6775208
+            "X": 298.821075,
+            "Y": 8.573928,
+            "Z": 140.632751
           },
           "colliders": [],
           "children": [
             {
-              "id": "Playground_Triton/OutsideCamp/Campfire/Campfire#-4304",
+              "id": "Playground_Triton/OutsideCamp/Campfire/Campfire#-1994",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -2326,14 +2429,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/OutsideCamp/Campfire/CampfireCauldronBase.001#-4312",
+              "id": "Playground_Triton/OutsideCamp/Campfire/CampfireCauldronBase.001#-2002",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": 0.0105896,
                 "Y": 0.02305317,
                 "Z": 0.09700012
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -2352,14 +2456,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/OutsideCamp/Campfire/Cauldron.002#-4320",
+              "id": "Playground_Triton/OutsideCamp/Campfire/Cauldron.002#-2010",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": -0.0273742676,
                 "Y": 0.52,
                 "Z": 0.105010986
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -2378,14 +2483,15 @@
               "children": []
             },
             {
-              "id": "Playground_Triton/OutsideCamp/Campfire/CauldronString#-4328",
+              "id": "Playground_Triton/OutsideCamp/Campfire/CauldronString#-2018",
+              "archetype": null,
               "type": "Static",
-              "pos": {
+              "position": {
                 "X": -0.0233764648,
                 "Y": 0.881999969,
                 "Z": 0.09500122
               },
-              "rot": {
+              "rotation": {
                 "X": 0.0,
                 "Y": 0.0,
                 "Z": 0.0
@@ -2408,14 +2514,15 @@
       ]
     },
     {
-      "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01#-2474",
+      "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01#-2842",
+      "archetype": null,
       "type": "Static",
-      "pos": {
+      "position": {
         "X": 111.936844,
         "Y": 6.99505043,
         "Z": 269.387756
       },
-      "rot": {
+      "rotation": {
         "X": 0.0,
         "Y": 0.0,
         "Z": 0.0
@@ -2433,14 +2540,15 @@
       "colliders": [],
       "children": [
         {
-          "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01/NHP_Tree_LP_G1_5m_01_LOD0#-2480",
+          "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01/NHP_Tree_LP_G1_5m_01_LOD0#-2848",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -2459,14 +2567,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01/NHP_Tree_LP_G1_5m_01_LOD1#-2488",
+          "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01/NHP_Tree_LP_G1_5m_01_LOD1#-2856",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -2485,14 +2594,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01/NHP_Tree_LP_G1_5m_01_LOD2#-2496",
+          "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01/NHP_Tree_LP_G1_5m_01_LOD2#-2864",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -2511,14 +2621,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01/Collider#-2504",
+          "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01/Collider#-2872",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -2536,6 +2647,7 @@
           "colliders": [
             {
               "shape": "capsule",
+              "size": null,
               "center": {
                 "X": 0.0,
                 "Y": 2.08,
@@ -2551,14 +2663,15 @@
       ]
     },
     {
-      "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01 (1)#-5186",
+      "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01 (1)#-2026",
+      "archetype": null,
       "type": "Static",
-      "pos": {
+      "position": {
         "X": 106.269753,
         "Y": 8.74555,
         "Z": 399.470276
       },
-      "rot": {
+      "rotation": {
         "X": 0.0,
         "Y": 0.0,
         "Z": 0.0
@@ -2576,14 +2689,15 @@
       "colliders": [],
       "children": [
         {
-          "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01 (1)/NHP_Tree_LP_G1_5m_01_LOD0#-5192",
+          "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01 (1)/NHP_Tree_LP_G1_5m_01_LOD0#-2032",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -2602,14 +2716,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01 (1)/NHP_Tree_LP_G1_5m_01_LOD1#-5200",
+          "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01 (1)/NHP_Tree_LP_G1_5m_01_LOD1#-2040",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -2628,14 +2743,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01 (1)/NHP_Tree_LP_G1_5m_01_LOD2#-5208",
+          "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01 (1)/NHP_Tree_LP_G1_5m_01_LOD2#-2048",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -2654,14 +2770,15 @@
           "children": []
         },
         {
-          "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01 (1)/Collider#-5216",
+          "id": "Playground_Triton/NHP_Tree_LP_G1_5m_01 (1)/Collider#-2056",
+          "archetype": null,
           "type": "Static",
-          "pos": {
+          "position": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
           },
-          "rot": {
+          "rotation": {
             "X": 0.0,
             "Y": 0.0,
             "Z": 0.0
@@ -2679,6 +2796,7 @@
           "colliders": [
             {
               "shape": "capsule",
+              "size": null,
               "center": {
                 "X": 0.0,
                 "Y": 2.08,

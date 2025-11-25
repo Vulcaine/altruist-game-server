@@ -19,7 +19,6 @@ public class CharacterPrefab : PrefabWorldObject3D
         const float radius = 0.5f;
         const float halfLength = 1.0f;
 
-        // Use a body profile for a humanoid capsule
         var bodyProfile = new HumanoidCapsuleBodyProfile(radius, halfLength, 75f);
         BodyDescriptor = bodyProfile.CreateBody(Transform);
     }
