@@ -14,24 +14,21 @@ using Server.Persistence;
 public sealed class GameSessionController : BaseSessionController
 {
     private readonly IVault<CharacterVault> _characterVault;
+    private readonly IPrefabVault<CharacterPrefab> _characterPrefabVault;
     private readonly IGameSessionService _gameSessionService;
-    private readonly ISpawnService3D _spawnService3D;
-    private readonly IPrefabFactory _prefabFactory;
-
     private readonly IGameWorldOrganizer3D _gameWorldOrganizer;
 
     public GameSessionController(
         IGameSessionService gameSessionService,
         IGameWorldOrganizer3D gameWorldCoordinator3D,
-        ISpawnService3D spawnService,
-        IPrefabFactory prefabFactory,
-        IVault<CharacterVault> characterVault)
+        IVault<CharacterVault> characterVault,
+        IPrefabVault<CharacterPrefab> characterPrefabVault
+    )
     {
         _gameSessionService = gameSessionService;
         _characterVault = characterVault;
-        _spawnService3D = spawnService;
         _gameWorldOrganizer = gameWorldCoordinator3D;
-        _prefabFactory = prefabFactory;
+        _characterPrefabVault = characterPrefabVault;
     }
 
     [HttpGet("characters")]
@@ -70,16 +67,18 @@ public sealed class GameSessionController : BaseSessionController
             return BadRequest("Character not found.");
         }
 
-        var startWorld = _gameWorldOrganizer.GetWorld(WorldIndexDefinition.Default);
+        var startWorld = _gameWorldOrganizer.GetWorld(WorldIndicies.StartWorld);
 
         if (startWorld == null)
         {
             return BadRequest("World not found.");
         }
 
-        var characterPrefab = _prefabFactory.Construct<CharacterPrefab>();
+        var characterPrefab = _characterPrefabVault.Construct();
         characterPrefab.Character.Apply(selectedCharacter);
-        _spawnService3D.Spawn(startWorld, characterPrefab);
+
+        await startWorld.SpawnDynamicObject(characterPrefab);
+        await _characterPrefabVault.SaveAsync(characterPrefab);
 
         var characterSession = new CharacterSessionContext(request.CharacterId);
         await _gameSessionService.SetContext(accountId, characterSession);

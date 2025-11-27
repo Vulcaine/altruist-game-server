@@ -1,4 +1,4 @@
-public static class WorldIndexDefinition
+public static class WorldIndicies
 {
-    public static int Default => 0;
+    public static int StartWorld => 0;
 }
