@@ -63,7 +63,7 @@ public class GameSessionPortal : AltruistGameSessionPortal
     }
 
     [Gate("join-world")]
-    public Task JoinWorldAsync()
+    public Task JoinWorldAsync(string clientId)
     {
         return Task.CompletedTask;
     }

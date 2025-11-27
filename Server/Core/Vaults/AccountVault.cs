@@ -14,17 +14,17 @@ public class AccountVault : AccountModel, IOnVaultCreate<AccountVault>
     [VaultColumn("username")]
     public string Username { get; set; } = "";
 
-    [VaultColumn("passwordHash")]
+    [VaultColumn("password-hash")]
     public string PasswordHash { get; set; } = "";
 
     [VaultUniqueColumn]
     [VaultColumn("email")]
     public string Email { get; set; } = "";
 
-    [VaultColumn("emailVerified")]
+    [VaultColumn("email-verified")]
     public bool EmailVerified { get; set; }
 
-    [VaultColumn("emailVerificationToken")]
+    [VaultColumn("email-verification-token")]
     public string EmailVerificationToken { get; set; } = "";
 
     public async Task<List<AccountVault>> OnCreateAsync(IServiceProvider serviceProvider)
