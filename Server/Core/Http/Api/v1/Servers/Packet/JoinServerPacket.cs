@@ -24,9 +24,6 @@ public struct JoinServerResponse
     [JsonPropertyName("status")]
     public string Status { get; set; }
 
-    [JsonPropertyName("socketUrl")]
-    public string SocketUrl { get; set; }
-
     [JsonPropertyName("sessionId")]
     public string SessionId { get; set; }
 
@@ -36,7 +33,6 @@ public struct JoinServerResponse
         Host = server.Host;
         Port = server.Port;
         Status = server.Status;
-        SocketUrl = server.SocketUrl;
         SessionId = session.SessionId;
     }
 }
@@ -58,9 +54,6 @@ public struct AvailableServerInfo
     [JsonPropertyName("status")]
     public string Status { get; set; } = "online";
 
-    [JsonPropertyName("socketUrl")]
-    public string SocketUrl { get; set; } = "ws://localhost:8000/ws/game";
-
     [JsonPropertyName("capacity")]
     public int Capacity { get; set; } = 0;
 
@@ -71,7 +64,6 @@ public struct AvailableServerInfo
         Host = server.Host;
         Port = server.Port;
         Status = server.Status;
-        SocketUrl = server.SocketUrl;
         Capacity = actiualCapacity;
     }
 }

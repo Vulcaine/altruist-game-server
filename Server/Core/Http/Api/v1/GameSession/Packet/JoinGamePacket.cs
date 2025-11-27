@@ -2,6 +2,7 @@ namespace Server;
 
 public struct JoinGameRequest
 {
+    public string ServerId { get; set; }
     public string CharacterId { get; set; }
 }
 

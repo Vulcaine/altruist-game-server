@@ -1,70 +1,52 @@
 using Altruist;
-using Altruist.Gaming;
+using Altruist.Persistence;
 using Altruist.Security;
-
-using Server.Persistence;
 
 namespace Server.GameSession;
 
 [SessionShield]
 [Portal("/game/v1")]
-public class GameSessionPortal : AltruistGameSessionPortal
+public class GameSessionPortal : BaseSessionPortal
 {
-    private readonly IVault<CharacterVault> _characterVault;
-    public GameSessionPortal(IGameSessionService gameSessionService, IAltruistRouter router, IVault<CharacterVault> characterVault) : base(gameSessionService, router)
+    private readonly IPrefabVault<CharacterPrefab> _characterPrefabVault;
+    private readonly GameSessionValidatorService _gameSessionValidatorService;
+
+    public GameSessionPortal(
+        IGameSessionService gameSessionService,
+        IAltruistRouter router, ISessionTokenValidator tokenValidator,
+        IPrefabVault<CharacterPrefab> characterPrefabVault,
+        GameSessionValidatorService gameSessionValidatorService
+        ) : base(gameSessionService, router, tokenValidator)
     {
-        _characterVault = characterVault;
+        _characterPrefabVault = characterPrefabVault;
+        _gameSessionValidatorService = gameSessionValidatorService;
     }
 
-    protected override Task<IResultPacket> OnHandshakeReceived(HandshakeRequestPacket message, string clientId, IResultPacket result)
+    protected override async Task<IResultPacket> OnHandshakeReceived(HandshakeRequestPacket message, string clientId, IResultPacket result)
     {
-        // TODO: send back available rooms/servers
-        return Task.FromResult(result);
+        var accountId = await GetAccountId(message.Token);
+        if (accountId == null)
+            return ResultPacket.Failed(TransportCode.Unauthorized, "Invalid token");
+
+        var validation = await _gameSessionValidatorService.ValidateHandshakeAsync(accountId);
+        if (!validation.Success)
+            return ResultPacket.Failed(TransportCode.Unauthorized, validation.Error ?? "Handshake failed");
+
+        var character = validation.Character!;
+        var startWorld = validation.World!;
+
+        var existingWorldObject = startWorld.FindObject(character.StorageId);
+        if (existingWorldObject != null)
+            startWorld.DestroyObject(existingWorldObject);
+
+        var characterPrefab = _characterPrefabVault.Construct();
+        characterPrefab.Character.Apply(character);
+
+        await startWorld.SpawnDynamicObject(characterPrefab, withId: character.StorageId);
+        await _characterPrefabVault.SaveAsync(characterPrefab);
+
+        return result;
     }
 
-    [Gate("available-servers")]
-    public Task<IResultPacket> AvailableServersAsync(string clientId)
-    {
-        // TODO: send back available rooms/servers
-        return Task.FromResult<IResultPacket>(ResultPacket.Success(TransportCode.Accepted));
-    }
 
-    [Gate("character-selection")]
-    public async Task<IResultPacket> CharacterSelectionAsync(string clientId)
-    {
-        AccountSessionContext? clientAccountContext =
-            await _gameSessionService.GetContext<AccountSessionContext>(clientId);
-
-        if (clientAccountContext == null)
-        {
-            return ResultPacket.Failed(
-                TransportCode.Unauthorized,
-                reason: "You are not logged in!");
-        }
-
-        var allCharacters = await _characterVault
-            .Where(c => c.AccountId == clientAccountContext.AccountId)
-            .ToListAsync();
-
-        var summaries = allCharacters
-            .Select(c => new CharacterSummary(
-                id: c.StorageId,
-                name: c.Name,
-                properties: c.Properties ?? Array.Empty<short>(),
-                world: c.World
-            ))
-            .ToArray();
-
-        var packet = new SelectableCharactersResult(
-            characters: summaries
-        );
-
-        return ResultPacket.Success(TransportCode.Accepted, packet);
-    }
-
-    [Gate("join-world")]
-    public Task JoinWorldAsync(string clientId)
-    {
-        return Task.CompletedTask;
-    }
 }

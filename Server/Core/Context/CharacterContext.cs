@@ -1,9 +1,11 @@
-public class CharacterSessionContext
+public class PlayerSessionContext
 {
     public string CharacterId { get; set; }
+    public string ServerId { get; set; }
 
-    public CharacterSessionContext(string characterId)
+    public PlayerSessionContext(string characterId, string serverId)
     {
         CharacterId = characterId;
+        ServerId = serverId;
     }
 }
