@@ -5,6 +5,7 @@ using Server.Persistence;
 using Altruist.Persistence;
 using Altruist;
 using Server.Gameplay;
+using Server.Packet;
 
 [Prefab("character")]
 [WorldObject("character")]
@@ -13,7 +14,11 @@ public class CharacterPrefab : WorldObjectPrefab3D
     [PrefabComponent]
     public IPrefabHandle<CharacterVault> Character { get; set; } = default!;
 
+    public string ClientId { get; set; } = "";
+
     public ISlotPalette? Slots { get; private set; }
+
+    public CharacterStateFlags StateFlags { get; set; }
 
     [PostConstruct]
     public void Init()

@@ -5,12 +5,14 @@ using Altruist.Gaming.Movement.ThreeD;
 
 using Server.Persistence;
 using Server.Packet;
+using Altruist.Gaming.ThreeD;
 
 namespace Server.GameSession;
 
 public interface IGameCharacterSessionService
 {
     Task<IResultPacket> HandleHandshakeForSessionAsync(
+        string clientId,
         string accountId,
         IGameSession clientSession,
         IResultPacket result);
@@ -37,6 +39,7 @@ public sealed class GameCharacterSessionService : IGameCharacterSessionService
     }
 
     public async Task<IResultPacket> HandleHandshakeForSessionAsync(
+        string clientId,
         string accountId,
         IGameSession clientSession,
         IResultPacket result)
@@ -49,7 +52,7 @@ public sealed class GameCharacterSessionService : IGameCharacterSessionService
         var character = validation.Character!;
         var startWorld = validation.World!;
 
-        await PrepareCharacterInWorldAsync(character, startWorld);
+        await PrepareCharacterInWorldAsync(clientId, character, startWorld);
         await BroadcastCharacterJoinedAsync(character);
         await BindCharacterSessionContextAsync(clientSession, accountId, validation);
 
@@ -59,7 +62,9 @@ public sealed class GameCharacterSessionService : IGameCharacterSessionService
     private static IResultPacket Unauthorized(string message)
         => ResultPacket.Failed(TransportCode.Unauthorized, message);
 
-    private async Task PrepareCharacterInWorldAsync(dynamic characterDynamic, dynamic startWorld)
+    private async Task PrepareCharacterInWorldAsync(
+        string clientId,
+        CharacterVault characterDynamic, IGameWorldManager3D startWorld)
     {
         var storageId = characterDynamic.StorageId;
 
@@ -70,6 +75,7 @@ public sealed class GameCharacterSessionService : IGameCharacterSessionService
 
         // Construct prefab and apply persisted character data
         var characterPrefab = _characterPrefabVault.Construct();
+        characterPrefab.ClientId = clientId;
         characterPrefab.Character.Apply(characterDynamic);
 
         // Spawn into world and obtain PhysX body

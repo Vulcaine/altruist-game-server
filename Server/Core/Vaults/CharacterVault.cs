@@ -26,6 +26,24 @@ public abstract class CharacterBase : VaultModel
     [VaultColumn("world")]
     public string World { get; set; } = string.Empty;
 
+    [VaultColumn("x")]
+    public int X { get; set; }
+
+    [VaultColumn("y")]
+    public int Y { get; set; }
+
+    [VaultColumn("z")]
+    public int Z { get; set; }
+
+    [VaultColumn("yaw")]
+    public float Yaw { get; set; }
+
+    [VaultColumn("pitch")]
+    public float Pitch { get; set; }
+
+    [VaultColumn("roll")]
+    public float Roll { get; set; }
+
     public short GetProperty(CharacterProperty property)
     {
         var index = (int)property;

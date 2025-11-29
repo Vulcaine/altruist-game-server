@@ -12,6 +12,11 @@ public interface IGameMovementSessionService
 {
     void SetupCharacterMovement(CharacterBase character, CharacterPrefab characterPrefab, IPhysxBody3D body);
     MovementProfile3D BuildMovementProfileFromCharacter(CharacterBase character);
+
+    /// <summary>
+    /// Try to get the current movement state for the given player id.
+    /// </summary>
+    bool TryGetPlayerState(string playerId, out MovementState3D state);
 }
 
 [Service(typeof(IGameMovementSessionService))]
@@ -90,5 +95,10 @@ public sealed class GameMovementSessionService : IGameMovementSessionService
         };
 
         return profile;
+    }
+
+    public bool TryGetPlayerState(string playerId, out MovementState3D state)
+    {
+        return _movementManager3D.TryGetPlayerState(playerId, out state);
     }
 }
