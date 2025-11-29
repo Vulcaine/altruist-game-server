@@ -13,17 +13,24 @@ using Server.Persistence;
 public sealed class GameSessionController : BaseSessionController
 {
     private readonly IVault<CharacterVault> _characterVault;
+    private readonly IVault<GameServerVault> _gameServerVault;
 
     private readonly GameSessionValidatorService _gameSessionValidatorService;
+
+    private readonly IGameSessionService _gameSessionService;
 
 
     public GameSessionController(
         IVault<CharacterVault> characterVault,
-        GameSessionValidatorService gameSessionValidatorService
+        IVault<GameServerVault> gameServerVault,
+        GameSessionValidatorService gameSessionValidatorService,
+        IGameSessionService gameSessionService
     )
     {
         _characterVault = characterVault;
+        _gameServerVault = gameServerVault;
         _gameSessionValidatorService = gameSessionValidatorService;
+        _gameSessionService = gameSessionService;
     }
 
     [HttpGet("characters")]
@@ -58,6 +65,25 @@ public sealed class GameSessionController : BaseSessionController
         var accountId = GetAccountId();
         if (accountId == null)
             return Unauthorized();
+
+        if (string.IsNullOrWhiteSpace(request.ServerId))
+            return BadRequest("Missing required query parameter 'serverId'.");
+
+        var server = await _gameServerVault
+            .Where(s => s.StorageId == request.ServerId)
+            .FirstOrDefaultAsync();
+
+        if (server == null)
+        {
+            return BadRequest("Server not found.");
+        }
+
+        var playerServerSession = _gameSessionService.GetSession(accountId)?.GetContext<PlayerServerSessionContext>(server.StorageId);
+
+        if (playerServerSession == null)
+        {
+            return BadRequest("You are not joined to any server.");
+        }
 
         var validation = await _gameSessionValidatorService.ValidateHttpJoinAsync(
                 accountId,

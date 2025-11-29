@@ -4,6 +4,7 @@ using Altruist.Gaming.ThreeD;
 using Server.Persistence;
 using Altruist.Persistence;
 using Altruist;
+using Server.Gameplay;
 
 [Prefab("character")]
 [WorldObject("character")]
@@ -11,6 +12,8 @@ public class CharacterPrefab : WorldObjectPrefab3D
 {
     [PrefabComponent]
     public IPrefabHandle<CharacterVault> Character { get; set; } = default!;
+
+    public ISlotPalette? Slots { get; private set; }
 
     [PostConstruct]
     public void Init()
@@ -20,5 +23,29 @@ public class CharacterPrefab : WorldObjectPrefab3D
 
         var bodyProfile = new HumanoidCapsuleBodyProfile(radius, halfLength, 75f);
         BodyDescriptor = bodyProfile.CreateBody(Transform);
+    }
+
+    [OnPrefabComponentLoad(nameof(Character))]
+    public async Task OnCharacterLoaded(
+        CharacterVault character,
+        IVault<SlotPaletteVault> slotPaletteVault)
+    {
+        var rows = await slotPaletteVault
+            .Where(p => p.CharacterId == character.StorageId)
+            .ToListAsync();
+
+        var palette = new SlotPalette();
+
+        foreach (var row in rows)
+        {
+            var slot = SlotIndexMapper.ToInputSlot(row.SlotIndex);
+            if (slot == InputSlots.None)
+                continue;
+
+            var binding = new SlotBinding(row.Kind, row.BindingId);
+            palette.Set(slot, binding);
+        }
+
+        Slots = palette;
     }
 }

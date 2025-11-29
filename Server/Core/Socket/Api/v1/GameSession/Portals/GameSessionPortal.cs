@@ -2,6 +2,8 @@ using Altruist;
 using Altruist.Persistence;
 using Altruist.Security;
 
+using Server.Packet;
+
 namespace Server.GameSession;
 
 [SessionShield]
@@ -28,6 +30,19 @@ public class GameSessionPortal : BaseSessionPortal
         if (accountId == null)
             return ResultPacket.Failed(TransportCode.Unauthorized, "Invalid token");
 
+        var accountSession = _gameSessionService.GetSession(accountId);
+
+        if (accountSession == null)
+            return ResultPacket.Failed(TransportCode.Unauthorized, "You are not joined to any game.");
+
+        var expiresAt = DateTime.UtcNow.AddHours(24);
+        var clientSession = _gameSessionService.MigrateSession(accountId, clientId, expiresAt);
+
+        if (clientSession == null)
+        {
+            return ResultPacket.Failed(TransportCode.Unauthorized, "You are not joined to any game.");
+        }
+
         var validation = await _gameSessionValidatorService.ValidateHandshakeAsync(accountId);
         if (!validation.Success)
             return ResultPacket.Failed(TransportCode.Unauthorized, validation.Error ?? "Handshake failed");
@@ -45,6 +60,15 @@ public class GameSessionPortal : BaseSessionPortal
         await startWorld.SpawnDynamicObject(characterPrefab, withId: character.StorageId);
         await _characterPrefabVault.SaveAsync(characterPrefab);
 
+        var CharacterJoinedPacket = new CharacterJoinedPacket
+        {
+            Id = character.StorageId,
+            Name = character.Name,
+            Properties = character.Properties
+        };
+
+        await _router.Broadcast.SendAsync(CharacterJoinedPacket);
+        await clientSession.SetContext(character.StorageId, new CharacterSessionContext(accountId, character.StorageId, validation.Server!.StorageId, validation.World!.Index.Index));
         return result;
     }
 

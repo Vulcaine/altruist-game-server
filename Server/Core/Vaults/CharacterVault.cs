@@ -69,6 +69,9 @@ public class CharacterVault : CharacterBase
     public string TemplateCode { get; set; } = string.Empty;
 
     [VaultColumn("server-id")]
-    [VaultForeignKey(typeof(GameServerVault), nameof(GameServerVault.StorageId))]
+    [VaultForeignKey(typeof(GameServerVault), nameof(StorageId))]
     public string ServerId { get; set; } = string.Empty;
+
+    [VaultColumn("world-id")]
+    public int WorldIndex { get; set; } = WorldIndicies.StartWorld;
 }

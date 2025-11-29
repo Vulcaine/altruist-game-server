@@ -60,6 +60,10 @@ public sealed class GameSessionValidatorService
         string serverId,
         string characterId)
     {
+        var session = _sessionService.GetSession(accountId);
+        if (session == null)
+            return new HttpJoinValidationResult(false, "You are not joined to any game.", null, null, null);
+
         if (string.IsNullOrWhiteSpace(accountId))
             return new HttpJoinValidationResult(false, "Missing account id.", null, null, null);
 
@@ -73,9 +77,8 @@ public sealed class GameSessionValidatorService
         if (!core.Success)
             return new HttpJoinValidationResult(false, core.Error, core.Server, core.Character, core.World);
 
-        // Persist the session intent for this account.
-        var session = new PlayerSessionContext(characterId, serverId);
-        await _sessionService.SetContext(accountId, session);
+        var playerSession = new PlayerSessionContext(accountId, serverId);
+        await session.SetContext(characterId, playerSession);
 
         return new HttpJoinValidationResult(true, null, core.Server, core.Character, core.World);
     }
@@ -88,15 +91,21 @@ public sealed class GameSessionValidatorService
         if (string.IsNullOrWhiteSpace(accountId))
             return new HandshakeValidationResult(false, "Missing account id.", null, null, null, null);
 
-        var session = await _sessionService.GetContext<PlayerSessionContext>(accountId);
+        var session = _sessionService.GetSession(accountId);
+
         if (session == null)
             return new HandshakeValidationResult(false, "You are not joined to any game.", null, null, null, null);
 
-        var core = await ValidateCoreAsync(accountId, session.ServerId, session.CharacterId);
-        if (!core.Success)
-            return new HandshakeValidationResult(false, core.Error, session, core.Server, core.Character, core.World);
+        var playerSession = await session.GetContext<PlayerSessionContext>(accountId);
 
-        return new HandshakeValidationResult(true, null, session, core.Server, core.Character, core.World);
+        if (playerSession == null)
+            return new HandshakeValidationResult(false, "You are not joined to any game.", null, null, null, null);
+
+        var core = await ValidateCoreAsync(accountId, playerSession.ServerId, playerSession.CharacterId);
+        if (!core.Success)
+            return new HandshakeValidationResult(false, core.Error, playerSession, core.Server, core.Character, core.World);
+
+        return new HandshakeValidationResult(true, null, playerSession, core.Server, core.Character, core.World);
     }
 
     // ------------------------------------------------------------

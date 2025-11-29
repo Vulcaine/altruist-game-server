@@ -11,12 +11,12 @@ using Server.Persistence;
 public sealed class ServerController : BaseSessionController
 {
     private readonly IVault<GameServerVault> _serverVault;
-    private readonly IVault<PlayerServerSession> _playerServerSessonVault;
+    private readonly IGameSessionService _gameSessionService;
 
-    public ServerController(IVault<GameServerVault> serverVault, IVault<PlayerServerSession> playerServerSessonVault)
+    public ServerController(IVault<GameServerVault> serverVault, IGameSessionService gameSessionService)
     {
         _serverVault = serverVault;
-        _playerServerSessonVault = playerServerSessonVault;
+        _gameSessionService = gameSessionService;
     }
 
     [HttpGet]
@@ -26,11 +26,8 @@ public sealed class ServerController : BaseSessionController
 
         var tasks = allServers.Select(async server =>
             {
-                var sessionCountForServer = await _playerServerSessonVault
-                    .Where(ps => ps.ServerId == server.StorageId)
-                    .CountAsync();
-
-                return new AvailableServerInfo(server, server.Capacity - (int)sessionCountForServer);
+                // TODO find all sessions instead of subtracting 0
+                return new AvailableServerInfo(server, server.Capacity - (int)0);
             }).ToArray();
 
         AvailableServerInfo[] serverInfos = await Task.WhenAll(tasks);
@@ -46,6 +43,13 @@ public sealed class ServerController : BaseSessionController
         if (string.IsNullOrEmpty(accountId))
             return Unauthorized("Missing principal id.");
 
+        var session = _gameSessionService.GetSession(accountId);
+
+        if (session == null)
+        {
+            return BadRequest("You are not joined to any game.");
+        }
+
         var existingServer = await _serverVault
             .Where(s => s.StorageId == request.ServerId)
             .FirstOrDefaultAsync();
@@ -60,37 +64,31 @@ public sealed class ServerController : BaseSessionController
             return BadRequest("Server is not online.");
         }
 
-        var sessionCountForServer = await _playerServerSessonVault
-            .Where(s => s.ServerId == existingServer.StorageId)
-            .CountAsync();
+        var sessionCountForServer = 0; // TODO: find real session count
 
         if (existingServer.Capacity <= sessionCountForServer)
         {
             return BadRequest("Server is full.");
         }
 
-        var existingSession = await _playerServerSessonVault
-            .Where(s => s.AccountId == accountId && s.ServerId == existingServer.StorageId)
-            .FirstOrDefaultAsync();
+        var existingSession = session.GetContext<PlayerServerSessionContext>(accountId);
 
-        var expired = existingSession?.ExpireAt < DateTime.UtcNow;
-
-        if (existingSession != null && !expired)
+        if (existingSession != null)
         {
             var existingResponse = new JoinServerResponse(
-                new AvailableServerInfo(existingServer, existingServer.Capacity - (int)sessionCountForServer),
-                existingSession
+                new AvailableServerInfo(existingServer, existingServer.Capacity - sessionCountForServer)
             );
             return Ok(existingResponse);
         }
 
-        var serverSession = new PlayerServerSession(accountId, existingServer.StorageId, Guid.NewGuid().ToString());
-        await _playerServerSessonVault.SaveAsync(serverSession);
+        var serverSession = new PlayerServerSessionContext(accountId, existingServer.StorageId);
+
+        await session.SetContext(accountId, serverSession);
 
         var response = new JoinServerResponse(
-            new AvailableServerInfo(existingServer, existingServer.Capacity - (int)sessionCountForServer),
-            serverSession
+            new AvailableServerInfo(existingServer, existingServer.Capacity - sessionCountForServer)
         );
+
         return Ok(response);
     }
 }

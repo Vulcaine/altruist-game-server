@@ -57,6 +57,7 @@ public class LoginService : ILoginService, IVerifyEmail
             return LoginResult.RFailure("Invalid username or password");
         }
 
+        _gameSessionService.CreateSession(account.StorageId, DateTime.UtcNow.AddHours(24));
         return LoginResult.ROk(account);
     }
 

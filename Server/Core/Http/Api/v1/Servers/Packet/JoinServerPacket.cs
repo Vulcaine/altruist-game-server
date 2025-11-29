@@ -24,16 +24,12 @@ public struct JoinServerResponse
     [JsonPropertyName("status")]
     public string Status { get; set; }
 
-    [JsonPropertyName("sessionId")]
-    public string SessionId { get; set; }
-
-    public JoinServerResponse(AvailableServerInfo server, PlayerServerSession session)
+    public JoinServerResponse(AvailableServerInfo server)
     {
         Id = server.Id;
         Host = server.Host;
         Port = server.Port;
         Status = server.Status;
-        SessionId = session.SessionId;
     }
 }
 
