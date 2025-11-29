@@ -67,6 +67,9 @@ public enum SlotBindingKind
     None,
     Spell,
     Item,
+    MovementJump,
+    MovementBoost,
+    MovementDash,
     MovementAction
 }
 

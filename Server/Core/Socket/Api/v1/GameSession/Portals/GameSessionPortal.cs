@@ -1,8 +1,5 @@
 using Altruist;
-using Altruist.Persistence;
 using Altruist.Security;
-
-using Server.Packet;
 
 namespace Server.GameSession;
 
@@ -10,67 +7,57 @@ namespace Server.GameSession;
 [Portal("/game/v1")]
 public class GameSessionPortal : BaseSessionPortal
 {
-    private readonly IPrefabVault<CharacterPrefab> _characterPrefabVault;
-    private readonly GameSessionValidatorService _gameSessionValidatorService;
+    private readonly IGameCharacterSessionService _characterSessionService;
 
     public GameSessionPortal(
         IGameSessionService gameSessionService,
-        IAltruistRouter router, ISessionTokenValidator tokenValidator,
-        IPrefabVault<CharacterPrefab> characterPrefabVault,
-        GameSessionValidatorService gameSessionValidatorService
-        ) : base(gameSessionService, router, tokenValidator)
+        IAltruistRouter router,
+        ISessionTokenValidator tokenValidator,
+        IGameCharacterSessionService characterSessionService
+    ) : base(gameSessionService, router, tokenValidator)
     {
-        _characterPrefabVault = characterPrefabVault;
-        _gameSessionValidatorService = gameSessionValidatorService;
+        _characterSessionService = characterSessionService;
     }
 
-    protected override async Task<IResultPacket> OnHandshakeReceived(HandshakeRequestPacket message, string clientId, IResultPacket result)
+    protected override async Task<IResultPacket> OnHandshakeReceived(
+        HandshakeRequestPacket message,
+        string clientId,
+        IResultPacket result)
     {
         var accountId = await GetAccountId(message.Token);
-        if (accountId == null)
-            return ResultPacket.Failed(TransportCode.Unauthorized, "Invalid token");
 
-        var accountSession = _gameSessionService.GetSession(accountId);
+        var authError = EnsureAuthenticated(accountId);
+        if (authError != null)
+            return authError;
 
-        if (accountSession == null)
-            return ResultPacket.Failed(TransportCode.Unauthorized, "You are not joined to any game.");
-
-        var expiresAt = DateTime.UtcNow.AddHours(24);
-        var clientSession = _gameSessionService.MigrateSession(accountId, clientId, expiresAt);
-
+        var clientSession = EnsureClientSession(accountId!, clientId);
         if (clientSession == null)
-        {
-            return ResultPacket.Failed(TransportCode.Unauthorized, "You are not joined to any game.");
-        }
+            return Unauthorized("You are not joined to any game.");
 
-        var validation = await _gameSessionValidatorService.ValidateHandshakeAsync(accountId);
-        if (!validation.Success)
-            return ResultPacket.Failed(TransportCode.Unauthorized, validation.Error ?? "Handshake failed");
-
-        var character = validation.Character!;
-        var startWorld = validation.World!;
-
-        var existingWorldObject = startWorld.FindObject(character.StorageId);
-        if (existingWorldObject != null)
-            startWorld.DestroyObject(existingWorldObject);
-
-        var characterPrefab = _characterPrefabVault.Construct();
-        characterPrefab.Character.Apply(character);
-
-        await startWorld.SpawnDynamicObject(characterPrefab, withId: character.StorageId);
-        await _characterPrefabVault.SaveAsync(characterPrefab);
-
-        var CharacterJoinedPacket = new CharacterJoinedPacket
-        {
-            Id = character.StorageId,
-            Name = character.Name,
-            Properties = character.Properties
-        };
-
-        await _router.Broadcast.SendAsync(CharacterJoinedPacket);
-        await clientSession.SetContext(character.StorageId, new CharacterSessionContext(accountId, character.StorageId, validation.Server!.StorageId, validation.World!.Index.Index));
-        return result;
+        return await _characterSessionService.HandleHandshakeForSessionAsync(
+            accountId!,
+            clientSession,
+            result);
     }
 
+    private static IResultPacket Unauthorized(string message)
+        => ResultPacket.Failed(TransportCode.Unauthorized, message);
 
+    private IResultPacket? EnsureAuthenticated(string? accountId)
+    {
+        if (accountId == null)
+            return Unauthorized("Invalid token");
+
+        return null;
+    }
+
+    private IGameSession? EnsureClientSession(string accountId, string clientId)
+    {
+        var accountSession = _gameSessionService.GetSession(accountId);
+        if (accountSession == null)
+            return null;
+
+        var expiresAt = DateTime.UtcNow.AddHours(GameSessionConstants.SessionExpirationHours);
+        return _gameSessionService.MigrateSession(accountId, clientId, expiresAt);
+    }
 }

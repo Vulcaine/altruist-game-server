@@ -7,6 +7,10 @@ namespace Server.Data;
 public enum CharacterProperty : int
 {
     Level = 0,
+    MovementSpeed = 1,
+    Acceleration = 2,
+    Friction = 3,
+    Max = 100,
     // Future:
     // Health = 1,
     // Mana = 2,

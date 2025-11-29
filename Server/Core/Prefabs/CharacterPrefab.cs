@@ -48,4 +48,10 @@ public class CharacterPrefab : WorldObjectPrefab3D
 
         Slots = palette;
     }
+
+    public async Task<ISlotPalette> LoadSlotPalette()
+    {
+        await Character.LoadAsync();
+        return Slots!;
+    }
 }

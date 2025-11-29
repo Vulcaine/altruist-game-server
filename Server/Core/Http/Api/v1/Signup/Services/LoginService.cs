@@ -57,7 +57,7 @@ public class LoginService : ILoginService, IVerifyEmail
             return LoginResult.RFailure("Invalid username or password");
         }
 
-        _gameSessionService.CreateSession(account.StorageId, DateTime.UtcNow.AddHours(24));
+        _gameSessionService.CreateSession(account.StorageId, DateTime.UtcNow.AddHours(GameSessionConstants.SessionExpirationHours));
         return LoginResult.ROk(account);
     }
 
@@ -79,7 +79,7 @@ public class LoginService : ILoginService, IVerifyEmail
         }
 
         var token = Guid.NewGuid().ToString("N");
-        var expiresAt = DateTimeOffset.UtcNow.AddHours(24);
+        var expiresAt = DateTimeOffset.UtcNow.AddHours(GameSessionConstants.SessionExpirationHours);
 
         var account = new AccountVault
         {
@@ -144,7 +144,7 @@ public class LoginService : ILoginService, IVerifyEmail
             {
                 Method = "email",
                 SentTo = email,
-                ExpiresAt = DateTimeOffset.UtcNow.AddHours(24)
+                ExpiresAt = DateTimeOffset.UtcNow.AddHours(GameSessionConstants.SessionExpirationHours)
             };
         }
         catch (Exception)
