@@ -1,6 +1,6 @@
 using Altruist;
-using Altruist.Engine;
 using Altruist.Security;
+using Altruist.Web;
 
 namespace Server.GameSession;
 
@@ -10,36 +10,55 @@ public class GameSessionPortal : BaseSessionPortal
 {
     private readonly IGameCharacterSessionService _characterSessionService;
     private readonly IGameSessionWorldCleanup _worldCleanup;
-    private readonly IAltruistEngine _engine;
 
     public GameSessionPortal(
         IGameSessionService gameSessionService,
         IGameSessionWorldCleanup worldCleanup,
         IAltruistRouter router,
-        IAltruistEngine altruistEngine,
-        ISessionTokenValidator tokenValidator,
+        IJwtTokenValidator tokenValidator,
         IGameCharacterSessionService characterSessionService
     ) : base(gameSessionService, router, tokenValidator)
     {
         _characterSessionService = characterSessionService;
         _worldCleanup = worldCleanup;
-        _engine = altruistEngine;
     }
 
-    public override async Task OnConnectedAsync(string clientId, ConnectionManager connection)
+    public override async Task OnConnectedAsync(string clientId, ConnectionManager connectionManager, AltruistConnection connection)
     {
-        var session = _gameSessionService.GetSession(clientId);
-        if (session == null)
+        if (connection is not WebSocketConnection)
         {
-            await _router.Client.SendAsync(
-                clientId,
-                ResultPacket.Failed(TransportCode.Unauthorized, "Session not found."));
-
-            _engine.WaitForNextTick(() => connection.DisconnectAsync(clientId));
+            await DisconnectWithMessage(clientId, "Invalid connection type.", connectionManager);
             return;
         }
 
-        await base.OnConnectedAsync(clientId, connection);
+        var authDetails = connection.AuthDetails;
+
+        if (authDetails == null)
+        {
+            await DisconnectWithMessage(clientId, "Auth details not found.", connectionManager);
+            return;
+        }
+
+        EnsureClientSessionAndMigrate(authDetails.PrincipalId, clientId);
+
+        var necessaryContexts = new[] { typeof(PlayerServerSessionContext), typeof(GameSessionContext) };
+        var sessionContexts = _gameSessionService.FindContexts(clientId, necessaryContexts);
+
+        if (sessionContexts.Count() != necessaryContexts.Count())
+        {
+            await DisconnectWithMessage(clientId, "Session not found.", connectionManager);
+            return;
+        }
+
+        await base.OnConnectedAsync(clientId, connectionManager, connection);
+    }
+
+    private async Task DisconnectWithMessage(string clientId, string message, ConnectionManager connectionManager)
+    {
+        await _router.Client.SendAsync(
+               clientId,
+               ResultPacket.Failed(TransportCode.Unauthorized, message));
+        await connectionManager.DisconnectEngineAwareAsync(clientId);
     }
 
     public override async Task OnDisconnectedAsync(string clientId, Exception? exception)
@@ -59,7 +78,7 @@ public class GameSessionPortal : BaseSessionPortal
         if (authError != null)
             return authError;
 
-        var clientSession = EnsureClientSession(accountId!, clientId);
+        var clientSession = _gameSessionService.GetSession(clientId);
         if (clientSession == null)
             return Unauthorized("You are not joined to any game.");
 
@@ -81,7 +100,7 @@ public class GameSessionPortal : BaseSessionPortal
         return null;
     }
 
-    private IGameSession? EnsureClientSession(string accountId, string clientId)
+    private IGameSession? EnsureClientSessionAndMigrate(string accountId, string clientId)
     {
         var accountSession = _gameSessionService.GetSession(accountId);
         if (accountSession == null)

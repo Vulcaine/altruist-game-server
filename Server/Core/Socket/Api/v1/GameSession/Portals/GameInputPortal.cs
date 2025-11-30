@@ -25,7 +25,7 @@ public class GameInputPortal : BaseSessionPortal
     public GameInputPortal(
         IGameSessionService gameSessionService,
         IAltruistRouter router,
-        ISessionTokenValidator tokenValidator,
+        IJwtTokenValidator tokenValidator,
         IGameWorldOrganizer3D gameWorldOrganizer)
         : base(gameSessionService, router, tokenValidator)
     {
@@ -43,7 +43,7 @@ public class GameInputPortal : BaseSessionPortal
         if (characterSession == null)
             return;
 
-        var playerSession = await clientSession.GetContext<PlayerSessionContext>(characterSession.AccountId);
+        var playerSession = await clientSession.GetContext<GameSessionContext>(characterSession.AccountId);
         if (playerSession == null)
             return;
 

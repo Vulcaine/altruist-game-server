@@ -41,11 +41,10 @@ public sealed class GameCharacterSessionService : IGameCharacterSessionService
         IGameSession clientSession,
         IResultPacket result)
     {
-        var validation = await _gameSessionValidatorService.ValidateHandshakeAsync(accountId);
+        var validation = await _gameSessionValidatorService.ValidateHandshakeAsync(clientId, accountId);
         if (!validation.Success)
             return Unauthorized(validation.Error ?? "Handshake failed");
 
-        // typed as dynamic in the validator, but we know these are character + world vault records
         var character = validation.Character!;
         var startWorld = validation.World!;
 

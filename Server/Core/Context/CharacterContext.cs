@@ -1,11 +1,15 @@
-public class PlayerSessionContext
+public class GameSessionContext
 {
     public string CharacterId { get; set; }
+    public string AccountId { get; set; }
     public string ServerId { get; set; }
 
-    public PlayerSessionContext(string characterId, string serverId)
+    public GameSessionContext(
+        string characterId,
+        string accountId, string serverId)
     {
         CharacterId = characterId;
+        AccountId = accountId;
         ServerId = serverId;
     }
 }

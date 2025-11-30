@@ -6,8 +6,8 @@ using Altruist.Security;
 
 public class BaseSessionPortal : AltruistGameSessionPortal
 {
-    private ISessionTokenValidator _tokenValidator;
-    public BaseSessionPortal(IGameSessionService gameSessionService, IAltruistRouter router, ISessionTokenValidator tokenValidator) : base(gameSessionService, router)
+    private IJwtTokenValidator _tokenValidator;
+    public BaseSessionPortal(IGameSessionService gameSessionService, IAltruistRouter router, IJwtTokenValidator tokenValidator) : base(gameSessionService, router)
     {
         _tokenValidator = tokenValidator;
     }

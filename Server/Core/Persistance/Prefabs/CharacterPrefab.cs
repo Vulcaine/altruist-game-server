@@ -7,6 +7,7 @@ using Altruist.Gaming.ThreeD;
 using Altruist.Numerics;
 using Altruist.Persistence;
 using Altruist.ThreeD.Numerics;
+using Altruist.UORM;
 
 using Server.Data;
 using Server.Gameplay;
@@ -20,10 +21,13 @@ public class CharacterPrefab : WorldObjectPrefab3D
     [PrefabComponent]
     public IPrefabHandle<CharacterVault> Character { get; set; } = default!;
 
+    [VaultIgnore]
     public string ClientId { get; set; } = "";
 
+    [VaultIgnore]
     public ISlotPalette? Slots { get; private set; }
 
+    [VaultIgnore]
     public CharacterStateFlags StateFlags { get; set; }
 
     // current movement intent from input

@@ -78,9 +78,16 @@ public sealed class GameSessionController : BaseSessionController
             return BadRequest("Server not found.");
         }
 
-        var playerServerSession = _gameSessionService.GetSession(accountId)?.GetContext<PlayerServerSessionContext>(server.StorageId);
+        var session = _gameSessionService.GetSession(accountId);
 
-        if (playerServerSession == null)
+        if (session == null)
+        {
+            return BadRequest("You are not logged in.");
+        }
+
+        var playerServerSessionContext = session.GetContext<PlayerServerSessionContext>(server.StorageId);
+
+        if (playerServerSessionContext == null)
         {
             return BadRequest("You are not joined to any server.");
         }

@@ -19,7 +19,7 @@ public sealed record HttpJoinValidationResult(
 public sealed record HandshakeValidationResult(
     bool Success,
     string? Error,
-    PlayerSessionContext? Session,
+    GameSessionContext? Session,
     GameServerVault? Server,
     CharacterVault? Character,
     IGameWorldManager3D? World
@@ -78,7 +78,7 @@ public sealed class GameSessionValidatorService
         if (!core.Success)
             return new HttpJoinValidationResult(false, core.Error, core.Server, core.Character, core.World);
 
-        var playerSession = new PlayerSessionContext(accountId, serverId);
+        var playerSession = new GameSessionContext(characterId, accountId, serverId);
         await session.SetContext(characterId, playerSession);
 
         return new HttpJoinValidationResult(true, null, core.Server, core.Character, core.World);
@@ -87,26 +87,42 @@ public sealed class GameSessionValidatorService
     // ------------------------------------------------------------
     // Socket side: validate handshake using stored PlayerSessionContext
     // ------------------------------------------------------------
-    public async Task<HandshakeValidationResult> ValidateHandshakeAsync(string accountId)
+    public async Task<HandshakeValidationResult> ValidateHandshakeAsync(string clientId, string accountId)
     {
         if (string.IsNullOrWhiteSpace(accountId))
             return new HandshakeValidationResult(false, "Missing account id.", null, null, null, null);
 
-        var session = _sessionService.GetSession(accountId);
+        if (string.IsNullOrWhiteSpace(clientId))
+        {
+            return new HandshakeValidationResult(
+                false,
+                "Missing client id.",
+                null,
+                null,
+                null,
+                null);
+        }
+
+        var session = _sessionService.GetSession(clientId);
 
         if (session == null)
             return new HandshakeValidationResult(false, "You are not joined to any game.", null, null, null, null);
 
-        var playerSession = await session.GetContext<PlayerSessionContext>(accountId);
+        var necessaryContexts = new[] { typeof(GameSessionContext) };
+        var actualContexts = session.FindContexts(necessaryContexts);
 
-        if (playerSession == null)
+        if (necessaryContexts.Count() != actualContexts.Count())
+        {
             return new HandshakeValidationResult(false, "You are not joined to any game.", null, null, null, null);
+        }
 
-        var core = await ValidateCoreAsync(accountId, playerSession.ServerId, playerSession.CharacterId);
+        var gameSession = actualContexts.OfType<GameSessionContext>().FirstOrDefault()!;
+
+        var core = await ValidateCoreAsync(accountId, gameSession.ServerId, gameSession.CharacterId);
         if (!core.Success)
-            return new HandshakeValidationResult(false, core.Error, playerSession, core.Server, core.Character, core.World);
+            return new HandshakeValidationResult(false, core.Error, gameSession, core.Server, core.Character, core.World);
 
-        return new HandshakeValidationResult(true, null, playerSession, core.Server, core.Character, core.World);
+        return new HandshakeValidationResult(true, null, gameSession, core.Server, core.Character, core.World);
     }
 
     // ------------------------------------------------------------
