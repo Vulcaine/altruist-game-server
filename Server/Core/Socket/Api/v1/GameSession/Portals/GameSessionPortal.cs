@@ -1,5 +1,3 @@
-using System.Numerics;
-
 using Altruist;
 using Altruist.Gaming.ThreeD;
 using Altruist.Numerics;
@@ -17,7 +15,6 @@ public class GameSessionPortal : BaseSessionPortal
     private readonly IGameCharacterSessionService _characterSessionService;
     private readonly IGameWorldOrganizer3D _gameWorldOrganizer;
     private readonly ISpatialBroadcastService3D _spatialBroadcastService;
-    private readonly IGameMovementSessionService _movementSessionService;
 
     private readonly IPrefabVault<CharacterPrefab> _characterPrefabVault;
 
@@ -28,14 +25,12 @@ public class GameSessionPortal : BaseSessionPortal
         ISessionTokenValidator tokenValidator,
         IGameCharacterSessionService characterSessionService,
         ISpatialBroadcastService3D spatialBroadcastService,
-        IGameMovementSessionService movementSessionService,
         IPrefabVault<CharacterPrefab> characterPrefabVault
     ) : base(gameSessionService, router, tokenValidator)
     {
         _characterSessionService = characterSessionService;
         _gameWorldOrganizer = gameWorldOrganizer;
         _spatialBroadcastService = spatialBroadcastService;
-        _movementSessionService = movementSessionService;
         _characterPrefabVault = characterPrefabVault;
     }
 
@@ -51,20 +46,6 @@ public class GameSessionPortal : BaseSessionPortal
                 var characterVault = await characterPrefab.Character.LoadAsync();
                 if (characterVault == null)
                     continue;
-
-                var playerId = characterVault.StorageId;
-
-                if (!_movementSessionService.TryGetPlayerState(playerId, out var state))
-                    continue;
-
-                characterVault.X = (int)state.Position.X;
-                characterVault.Y = (int)state.Position.Y;
-                characterVault.Z = (int)state.Position.Z;
-
-                var (yaw, pitch, roll) = ToYawPitchRoll(state.Orientation);
-                characterVault.Yaw = yaw;
-                characterVault.Pitch = pitch;
-                characterVault.Roll = roll;
 
                 await _characterPrefabVault.SaveAsync(characterPrefab);
             }
@@ -84,18 +65,13 @@ public class GameSessionPortal : BaseSessionPortal
                 if (characterVault == null)
                     continue;
 
-                var playerId = characterVault.StorageId;
-
-                if (!_movementSessionService.TryGetPlayerState(playerId, out var state))
-                    continue;
-
-                var pos = state.Position;
-                var (yaw, pitch, roll) = ToYawPitchRoll(state.Orientation);
+                var position = characterPrefab.GetCurrentPosition();
+                var (yaw, pitch, roll) = characterPrefab.GetCurrentYawPitchRoll();
 
                 var update = new UpdateClientPositionAndOrientation(
-                    pos.X,
-                    pos.Y,
-                    pos.Z,
+                    position.X,
+                    position.Y,
+                    position.Z,
                     yaw,
                     pitch,
                     roll,
@@ -103,9 +79,9 @@ public class GameSessionPortal : BaseSessionPortal
                 );
 
                 var cell = new IntVector3(
-                    (int)pos.X,
-                    (int)pos.Y,
-                    (int)pos.Z
+                    (int)position.X,
+                    (int)position.Y,
+                    (int)position.Z
                 );
 
                 _ = _spatialBroadcastService.SpatialBroadcast<CharacterPrefab>(
@@ -114,28 +90,6 @@ public class GameSessionPortal : BaseSessionPortal
                     update);
             }
         }
-    }
-
-    private static (float Yaw, float Pitch, float Roll) ToYawPitchRoll(Quaternion q)
-    {
-        q = Quaternion.Normalize(q);
-
-        float siny_cosp = 2f * (q.W * q.Y + q.Z * q.X);
-        float cosy_cosp = 1f - 2f * (q.Y * q.Y + q.Z * q.Z);
-        float yaw = MathF.Atan2(siny_cosp, cosy_cosp);
-
-        float sinp = 2f * (q.W * q.X - q.Z * q.Y);
-        float pitch;
-        if (MathF.Abs(sinp) >= 1f)
-            pitch = MathF.CopySign(MathF.PI / 2f, sinp);
-        else
-            pitch = MathF.Asin(sinp);
-
-        float sinr_cosp = 2f * (q.W * q.Z + q.X * q.Y);
-        float cosr_cosp = 1f - 2f * (q.Z * q.Z + q.X * q.X);
-        float roll = MathF.Atan2(sinr_cosp, cosr_cosp);
-
-        return (yaw, pitch, roll);
     }
 
     protected override async Task<IResultPacket> OnHandshakeReceived(

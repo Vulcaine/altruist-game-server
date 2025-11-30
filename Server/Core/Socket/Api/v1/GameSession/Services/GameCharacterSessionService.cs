@@ -24,18 +24,15 @@ public sealed class GameCharacterSessionService : IGameCharacterSessionService
     private readonly IPrefabVault<CharacterPrefab> _characterPrefabVault;
     private readonly GameSessionValidatorService _gameSessionValidatorService;
     private readonly IAltruistRouter _router;
-    private readonly IGameMovementSessionService _movementSessionService;
 
     public GameCharacterSessionService(
         IPrefabVault<CharacterPrefab> characterPrefabVault,
         GameSessionValidatorService gameSessionValidatorService,
-        IAltruistRouter router,
-        IGameMovementSessionService movementSessionService)
+        IAltruistRouter router)
     {
         _characterPrefabVault = characterPrefabVault;
         _gameSessionValidatorService = gameSessionValidatorService;
         _router = router;
-        _movementSessionService = movementSessionService;
     }
 
     public async Task<IResultPacket> HandleHandshakeForSessionAsync(
@@ -84,7 +81,7 @@ public sealed class GameCharacterSessionService : IGameCharacterSessionService
         // Wire movement for this character based on its properties
         if (characterDynamic is CharacterBase characterBase && body is IPhysxBody3D physxBody)
         {
-            _movementSessionService.SetupCharacterMovement(characterBase, characterPrefab, physxBody);
+            characterPrefab.SetupMovement(characterBase, physxBody);
         }
 
         // Persist prefab state if needed

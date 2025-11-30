@@ -24,13 +24,11 @@ public sealed class ServerController : BaseSessionController
     {
         var allServers = await _serverVault.ToListAsync();
 
-        var tasks = allServers.Select(async server =>
+        AvailableServerInfo[] serverInfos = allServers.Select(server =>
             {
                 // TODO find all sessions instead of subtracting 0
                 return new AvailableServerInfo(server, server.Capacity - (int)0);
             }).ToArray();
-
-        AvailableServerInfo[] serverInfos = await Task.WhenAll(tasks);
 
         return Ok(serverInfos);
     }

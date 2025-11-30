@@ -11,7 +11,6 @@ namespace Server.GameSession;
 
 public class GameInputPortal : BaseSessionPortal
 {
-    private readonly IMovementManager3D _movementManager;
     private readonly IGameWorldOrganizer3D _gameWorldOrganizer;
 
     // Cache all valid slots once so we don't call Enum.GetValues on every input.
@@ -27,11 +26,9 @@ public class GameInputPortal : BaseSessionPortal
         IGameSessionService gameSessionService,
         IAltruistRouter router,
         ISessionTokenValidator tokenValidator,
-        IGameWorldOrganizer3D gameWorldOrganizer,
-        IMovementManager3D movementManager3D)
+        IGameWorldOrganizer3D gameWorldOrganizer)
         : base(gameSessionService, router, tokenValidator)
     {
-        _movementManager = movementManager3D;
         _gameWorldOrganizer = gameWorldOrganizer;
     }
 
@@ -50,10 +47,6 @@ public class GameInputPortal : BaseSessionPortal
         if (playerSession == null)
             return;
 
-        var playerId = playerSession.CharacterId;
-        if (!_movementManager.TryGetPlayerState(playerId, out var state))
-            return;
-
         var characterWorld = _gameWorldOrganizer.GetWorld(characterSession.WorldIndex);
         if (characterWorld == null)
             return;
@@ -63,9 +56,10 @@ public class GameInputPortal : BaseSessionPortal
             return;
 
         ISlotPalette slotPalette = await characterPrefab.LoadSlotPalette();
+        Quaternion currentOrientation = characterPrefab.GetCurrentOrientation();
 
-        var intent = MapInputToIntent(packet, state.Orientation, slotPalette);
-        _movementManager.SetPlayerIntent(playerId, intent);
+        var intent = MapInputToIntent(packet, currentOrientation, slotPalette);
+        characterPrefab.SetInputIntent(in intent);
     }
 
     private MovementIntent3D MapInputToIntent(
