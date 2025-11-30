@@ -32,26 +32,26 @@ public struct CharacterSummary
     /// </summary>
     [JsonPropertyName("world")]
     [Key(3)]
-    public string? World { get; set; }
+    public int? WorldIndex { get; set; }
 
     public CharacterSummary()
     {
         Id = string.Empty;
         Name = string.Empty;
         Properties = Array.Empty<short>();
-        World = null;
+        WorldIndex = WorldIndicies.StartWorld;
     }
 
     public CharacterSummary(
         string id,
         string name,
         short[] properties,
-        string? world = null)
+        int world)
     {
         Id = id;
         Name = name;
         Properties = properties ?? Array.Empty<short>();
-        World = world;
+        WorldIndex = world;
     }
 
     public short this[CharacterProperty property]

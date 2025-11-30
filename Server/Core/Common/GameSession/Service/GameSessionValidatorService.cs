@@ -1,4 +1,5 @@
 using System.Net;
+using System.Net.Sockets;
 
 using Altruist;
 using Altruist.Gaming.ThreeD;
@@ -62,7 +63,7 @@ public sealed class GameSessionValidatorService
     {
         var session = _sessionService.GetSession(accountId);
         if (session == null)
-            return new HttpJoinValidationResult(false, "You are not joined to any game.", null, null, null);
+            return new HttpJoinValidationResult(false, "You are not logged in.", null, null, null);
 
         if (string.IsNullOrWhiteSpace(accountId))
             return new HttpJoinValidationResult(false, "Missing account id.", null, null, null);
@@ -140,17 +141,36 @@ public sealed class GameSessionValidatorService
         return new CoreValidationResult(true, null, server, character, world);
     }
 
-    // ------------------------------------------------------------
-    // Helpers
-    // ------------------------------------------------------------
     private static bool IsCurrentHostForServer(GameServerVault server)
     {
         var serverHost = GetHostFromServer(server);
         if (string.IsNullOrWhiteSpace(serverHost))
             return false;
 
-        var currentHost = Dns.GetHostName();
-        return string.Equals(serverHost, currentHost, StringComparison.OrdinalIgnoreCase);
+        serverHost = serverHost.Trim();
+
+        if (serverHost.Equals("localhost", StringComparison.OrdinalIgnoreCase) ||
+            serverHost == "127.0.0.1" ||
+            serverHost == "::1")
+        {
+            return true;
+        }
+
+        try
+        {
+            var serverAddresses = Dns.GetHostAddresses(serverHost);
+            var localHostName = Dns.GetHostName();
+            var localAddresses = Dns.GetHostAddresses(localHostName)
+                .Concat([IPAddress.Loopback, IPAddress.IPv6Loopback])
+                .Distinct()
+                .ToArray();
+
+            return serverAddresses.Any(sa => localAddresses.Any(la => la.Equals(sa)));
+        }
+        catch (SocketException)
+        {
+            return false;
+        }
     }
 
     private static string? GetHostFromServer(GameServerVault server)

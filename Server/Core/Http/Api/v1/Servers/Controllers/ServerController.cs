@@ -46,7 +46,7 @@ public sealed class ServerController : BaseSessionController
 
         if (session == null)
         {
-            return BadRequest("You are not joined to any game.");
+            return Unauthorized("You are not logged in.");
         }
 
         var existingServer = await _serverVault

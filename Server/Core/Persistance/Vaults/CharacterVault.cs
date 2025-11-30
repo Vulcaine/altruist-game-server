@@ -5,6 +5,8 @@ using Altruist;
 using Altruist.Persistence;
 using Altruist.UORM;
 
+using Microsoft.Extensions.DependencyInjection;
+
 using Server.Data;
 
 namespace Server.Persistence;
@@ -27,26 +29,8 @@ public abstract class CharacterBase : VaultModel
     /// <summary>
     /// Current world / shard / zone the character is in.
     /// </summary>
-    [VaultColumn("world")]
-    public string World { get; set; } = string.Empty;
-
-    [VaultColumn("x")]
-    public int X { get; set; }
-
-    [VaultColumn("y")]
-    public int Y { get; set; }
-
-    [VaultColumn("z")]
-    public int Z { get; set; }
-
-    [VaultColumn("yaw")]
-    public float Yaw { get; set; }
-
-    [VaultColumn("pitch")]
-    public float Pitch { get; set; }
-
-    [VaultColumn("roll")]
-    public float Roll { get; set; }
+    [VaultColumn("world-index")]
+    public int WorldIndex { get; set; } = WorldIndicies.StartWorld;
 
     public short GetProperty(CharacterProperty property)
     {
@@ -76,15 +60,26 @@ public abstract class CharacterBase : VaultModel
 }
 
 [Vault("character-template")]
-public class CharacterTemplateVault : CharacterBase
+public class CharacterTemplateVault : CharacterBase, IOnVaultCreate<CharacterTemplateVault>
 {
     [VaultColumn("template-code")]
     [VaultUniqueColumn]
     public string TemplateCode { get; set; } = string.Empty;
+
+    public Task<List<CharacterTemplateVault>> OnCreateAsync(IServiceProvider serviceProvider)
+    {
+        var adminCharacter = new CharacterTemplateVault()
+        {
+            TemplateCode = "character",
+            Name = "Admin",
+            WorldIndex = 0
+        };
+        return Task.FromResult(new List<CharacterTemplateVault>() { adminCharacter });
+    }
 }
 
 [Vault("character")]
-public class CharacterVault : CharacterBase
+public class CharacterVault : CharacterBase, IOnVaultCreate<CharacterVault>
 {
     [VaultColumn("template-code")]
     [VaultForeignKey(typeof(CharacterTemplateVault), nameof(CharacterTemplateVault.TemplateCode))]
@@ -94,15 +89,57 @@ public class CharacterVault : CharacterBase
     [VaultForeignKey(typeof(GameServerVault), nameof(StorageId))]
     public string ServerId { get; set; } = string.Empty;
 
-    [VaultColumn("world-id")]
-    public int WorldIndex { get; set; } = WorldIndicies.StartWorld;
-
     [VaultColumn("bonuses")]
     public short[] Bonuses { get; set; } = Array.Empty<short>();
 
+
+    [VaultColumn("x")]
+    public int X { get; set; }
+
+    [VaultColumn("y")]
+    public int Y { get; set; }
+
+    [VaultColumn("z")]
+    public int Z { get; set; }
+
+    [VaultColumn("yaw")]
+    public float Yaw { get; set; }
+
+    [VaultColumn("pitch")]
+    public float Pitch { get; set; }
+
+    [VaultColumn("roll")]
+    public float Roll { get; set; }
+
+
+    public async Task<List<CharacterVault>> OnCreateAsync(IServiceProvider serviceProvider)
+    {
+        var accountVault = serviceProvider.GetRequiredService<IVault<AccountVault>>();
+        var serverVault = serviceProvider.GetRequiredService<IVault<GameServerVault>>();
+
+        var adminAccount = await accountVault.Where(a => a.Username == "admin").FirstOrDefaultAsync();
+        var localhostServer = await serverVault.Where(s => s.Name == "localhost").FirstOrDefaultAsync();
+
+        var adminCharacter = new CharacterVault()
+        {
+            AccountId = adminAccount!.StorageId,
+            ServerId = localhostServer!.StorageId,
+            Name = "Admin",
+            TemplateCode = "character",
+            WorldIndex = 0,
+            X = 0,
+            Y = 0,
+            Z = 0,
+            Yaw = 0,
+            Pitch = 0,
+            Roll = 0
+        };
+
+        return new List<CharacterVault> { adminCharacter };
+    }
 }
 
-[Vault("npc_template")]
+[Vault("npc-template")]
 public class NPCVault : VaultModel, IOnVaultCreate<NPCVault>
 {
     // Unique template code, e.g. "orc_warrior_01"

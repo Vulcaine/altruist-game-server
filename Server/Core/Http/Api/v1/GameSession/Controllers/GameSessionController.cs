@@ -52,7 +52,7 @@ public sealed class GameSessionController : BaseSessionController
             id: c.StorageId,
             name: c.Name,
             properties: c.Properties ?? Array.Empty<short>(),
-            world: c.World
+            world: c.WorldIndex
         ))
         .ToArray();
 
