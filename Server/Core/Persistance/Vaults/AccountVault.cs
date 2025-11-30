@@ -24,7 +24,7 @@ public class AccountVault : AccountModel, IOnVaultCreate<AccountVault>
     [VaultColumn("email-verified")]
     public bool EmailVerified { get; set; }
 
-    [VaultColumn("email-verification-token")]
+    [VaultColumn("email-verification-token", nullable: true)]
     public string EmailVerificationToken { get; set; } = "";
 
     public async Task<List<AccountVault>> OnCreateAsync(IServiceProvider serviceProvider)

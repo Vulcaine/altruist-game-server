@@ -1,4 +1,8 @@
+
+using System.Text.Json;
+
 using Altruist;
+using Altruist.Persistence;
 using Altruist.UORM;
 
 using Server.Data;
@@ -92,4 +96,79 @@ public class CharacterVault : CharacterBase
 
     [VaultColumn("world-id")]
     public int WorldIndex { get; set; } = WorldIndicies.StartWorld;
+
+    [VaultColumn("bonuses")]
+    public short[] Bonuses { get; set; } = Array.Empty<short>();
+
+}
+
+[Vault("npc_template")]
+public class NPCVault : VaultModel, IOnVaultCreate<NPCVault>
+{
+    // Unique template code, e.g. "orc_warrior_01"
+    [VaultColumn("template-code")]
+    [VaultUniqueColumn]
+    public string TemplateCode { get; set; } = string.Empty;
+
+    // Displayed name, e.g. "Orc Warrior"
+    [VaultColumn("name")]
+    public string Name { get; set; } = string.Empty;
+
+    // Folder or asset path to model/prefab, e.g. "monsters/orc/warrior"
+    [VaultColumn("model-path")]
+    public string ModelPath { get; set; } = string.Empty;
+
+    // Core stats – these remain static and are applied at spawn time
+    [VaultColumn("level")]
+    public int Level { get; set; }
+
+    [VaultColumn("base-hp")]
+    public int BaseHP { get; set; }
+
+    [VaultColumn("base-attack")]
+    public int BaseAttack { get; set; }
+
+    [VaultColumn("base-defense")]
+    public int BaseDefense { get; set; }
+
+    // Generic property bag (mirrors your CharacterBase.Properties)
+    // Represented as smallint[] in PostgreSQL
+    [VaultColumn("properties")]
+    public short[] Properties { get; set; } = Array.Empty<short>();
+
+    // Tags for behavior (optional, flexible)
+    // e.g. ["aggressive", "undead", "humanoid"]
+    [VaultColumn("tags")]
+    public string[] Tags { get; set; } = Array.Empty<string>();
+
+    private static readonly JsonSerializerOptions _jsonOptions = new()
+    {
+        PropertyNameCaseInsensitive = true,
+        ReadCommentHandling = JsonCommentHandling.Skip,
+        AllowTrailingCommas = true
+    };
+
+    public async Task<List<NPCVault>> OnCreateAsync(IServiceProvider serviceProvider)
+    {
+        var list = new List<NPCVault>();
+        var filePath = Path.Combine(AppContext.BaseDirectory, "Resources", "monsters.json");
+
+        if (File.Exists(filePath))
+        {
+            try
+            {
+                var json = await File.ReadAllTextAsync(filePath);
+                var result = JsonSerializer.Deserialize<List<NPCVault>>(json, _jsonOptions);
+
+                if (result != null && result.Count > 0)
+                    return result;
+            }
+            catch
+            {
+
+            }
+        }
+
+        return list;
+    }
 }

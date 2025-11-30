@@ -23,11 +23,12 @@ public sealed class ServerController : BaseSessionController
     public async Task<IActionResult> GetAvailableServers()
     {
         var allServers = await _serverVault.ToListAsync();
+        var allServerSessions = _gameSessionService.FindAllContexts<PlayerServerSessionContext>();
 
         AvailableServerInfo[] serverInfos = allServers.Select(server =>
             {
-                // TODO find all sessions instead of subtracting 0
-                return new AvailableServerInfo(server, server.Capacity - (int)0);
+                var contextsForThisServer = allServerSessions.Where(s => s.ServerId == server.StorageId).Count();
+                return new AvailableServerInfo(server, server.Capacity - contextsForThisServer);
             }).ToArray();
 
         return Ok(serverInfos);
@@ -62,14 +63,14 @@ public sealed class ServerController : BaseSessionController
             return BadRequest("Server is not online.");
         }
 
-        var sessionCountForServer = 0; // TODO: find real session count
+        var sessionCountForServer = existingServer.Capacity - session.FindAllContexts<PlayerServerSessionContext>().Count();
 
-        if (existingServer.Capacity <= sessionCountForServer)
+        if (sessionCountForServer == 0)
         {
             return BadRequest("Server is full.");
         }
 
-        var existingSession = session.GetContext<PlayerServerSessionContext>(accountId);
+        var existingSession = await session.GetContext<PlayerServerSessionContext>(accountId);
 
         if (existingSession != null)
         {

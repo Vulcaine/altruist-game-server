@@ -34,6 +34,35 @@ public class GameSessionPortal : BaseSessionPortal
         _characterPrefabVault = characterPrefabVault;
     }
 
+    public override async Task OnDisconnectedAsync(string clientId, Exception? exception)
+    {
+        var clientSession = _gameSessionService.GetSession(clientId);
+
+        if (clientSession == null)
+        {
+            return;
+        }
+
+        var characterSession = await clientSession.
+        GetContext<CharacterSessionContext>(clientId);
+
+        if (characterSession == null)
+        {
+            await base.OnConnectedAsync(clientId);
+            return;
+        }
+
+        var characterWorld = _gameWorldOrganizer.GetWorld(characterSession.WorldIndex);
+        if (characterWorld == null)
+        {
+            await base.OnConnectedAsync(clientId);
+            return;
+        }
+
+        characterWorld.DestroyObject(characterSession.CharacterId);
+        await base.OnConnectedAsync(clientId);
+    }
+
     [Cycle("*/30 * * * * *")]
     public async Task PersistCharacterPositionsSnapshot()
     {

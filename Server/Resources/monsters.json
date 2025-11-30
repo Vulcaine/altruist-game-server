@@ -1,0 +1,24 @@
+[
+  {
+    "templateCode": "slime_basic",
+    "name": "Green Slime",
+    "modelPath": "monsters/slime/green",
+    "level": 1,
+    "baseHP": 12,
+    "baseAttack": 2,
+    "baseDefense": 0,
+    "properties": [1, 0, 0],
+    "tags": ["slime", "neutral"]
+  },
+  {
+    "templateCode": "wolf_basic",
+    "name": "Forest Wolf",
+    "modelPath": "monsters/wolf/forest",
+    "level": 2,
+    "baseHP": 30,
+    "baseAttack": 5,
+    "baseDefense": 1,
+    "properties": [2, 0, 1],
+    "tags": ["beast", "aggressive"]
+  }
+]

@@ -12,6 +12,7 @@ altruist:
       path: "/"
     transport:
       mode: websocket
+      timeout: 10
       codec:
         provider: json
       config:

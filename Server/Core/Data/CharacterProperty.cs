@@ -6,14 +6,44 @@ namespace Server.Data;
 /// </summary>
 public enum CharacterProperty : int
 {
-    Level = 0,
-    MovementSpeed = 1,
-    Acceleration = 2,
-    Friction = 3,
-    Max = 100,
-    // Future:
-    // Health = 1,
-    // Mana = 2,
-    // Strength = 3,
-    // etc...
+    None,
+    Level,
+    Experience,
+    // Stats:
+    Health,
+    MaxHealth,
+    Mana,
+    MaxMana,
+    Stamina,
+    MaxStamina,
+    Strength,
+    Agility,
+    Intelligence,
+    Vitality,
+    // we dont want CriticalChance, we will have moves
+    // that does critical damage 100%, so we only need crit damage
+    CriticalDamage,
+    AttackSpeed,
+    MovementSpeed,
+    Acceleration,
+    Friction,
+    Max,
+}
+
+
+public enum CharacterStates
+{
+    None,
+    Stunned,
+    Broken,
+    Poisoned,
+    Dead
+}
+
+
+public enum EffectTypes
+{
+    None,
+    Defense,
+    Poison
 }
