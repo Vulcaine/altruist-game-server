@@ -2,10 +2,7 @@
 using System.Text.Json;
 
 using Altruist;
-using Altruist.Persistence;
 using Altruist.UORM;
-
-using Microsoft.Extensions.DependencyInjection;
 
 using Server.Data;
 
@@ -60,7 +57,7 @@ public abstract class CharacterBase : VaultModel
 }
 
 [Vault("character-template")]
-public class CharacterTemplateVault : CharacterBase, IOnVaultCreate<CharacterTemplateVault>
+public class CharacterTemplateVault : CharacterBase
 {
     [VaultColumn("template-code")]
     [VaultUniqueColumn]
@@ -79,7 +76,7 @@ public class CharacterTemplateVault : CharacterBase, IOnVaultCreate<CharacterTem
 }
 
 [Vault("character")]
-public class CharacterVault : CharacterBase, IOnVaultCreate<CharacterVault>
+public class CharacterVault : CharacterBase
 {
     [VaultColumn("template-code")]
     [VaultForeignKey(typeof(CharacterTemplateVault), nameof(CharacterTemplateVault.TemplateCode))]
@@ -110,37 +107,10 @@ public class CharacterVault : CharacterBase, IOnVaultCreate<CharacterVault>
 
     [VaultColumn("roll")]
     public float Roll { get; set; }
-
-
-    public async Task<List<CharacterVault>> OnCreateAsync(IServiceProvider serviceProvider)
-    {
-        var accountVault = serviceProvider.GetRequiredService<IVault<AccountVault>>();
-        var serverVault = serviceProvider.GetRequiredService<IVault<GameServerVault>>();
-
-        var adminAccount = await accountVault.Where(a => a.Username == "admin").FirstOrDefaultAsync();
-        var localhostServer = await serverVault.Where(s => s.Name == "localhost").FirstOrDefaultAsync();
-
-        var adminCharacter = new CharacterVault()
-        {
-            AccountId = adminAccount!.StorageId,
-            ServerId = localhostServer!.StorageId,
-            Name = "Admin",
-            TemplateCode = "character",
-            WorldIndex = 0,
-            X = 0,
-            Y = 0,
-            Z = 0,
-            Yaw = 0,
-            Pitch = 0,
-            Roll = 0
-        };
-
-        return new List<CharacterVault> { adminCharacter };
-    }
 }
 
 [Vault("npc-template")]
-public class NPCVault : VaultModel, IOnVaultCreate<NPCVault>
+public class NPCVault : VaultModel
 {
     // Unique template code, e.g. "orc_warrior_01"
     [VaultColumn("template-code")]
@@ -184,28 +154,4 @@ public class NPCVault : VaultModel, IOnVaultCreate<NPCVault>
         ReadCommentHandling = JsonCommentHandling.Skip,
         AllowTrailingCommas = true
     };
-
-    public async Task<List<NPCVault>> OnCreateAsync(IServiceProvider serviceProvider)
-    {
-        var list = new List<NPCVault>();
-        var filePath = Path.Combine(AppContext.BaseDirectory, "Resources", "monsters.json");
-
-        if (File.Exists(filePath))
-        {
-            try
-            {
-                var json = await File.ReadAllTextAsync(filePath);
-                var result = JsonSerializer.Deserialize<List<NPCVault>>(json, _jsonOptions);
-
-                if (result != null && result.Count > 0)
-                    return result;
-            }
-            catch
-            {
-
-            }
-        }
-
-        return list;
-    }
 }

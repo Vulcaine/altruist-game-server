@@ -1,14 +1,10 @@
-
-using Altruist.Persistence;
 using Altruist.Security;
 using Altruist.UORM;
-
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Server.Persistence;
 
 [Vault("account")]
-public class AccountVault : AccountModel, IOnVaultCreate<AccountVault>
+public class AccountVault : AccountModel
 {
     [VaultUniqueColumn]
     [VaultColumn("username")]
@@ -22,15 +18,9 @@ public class AccountVault : AccountModel, IOnVaultCreate<AccountVault>
     public string Email { get; set; } = "";
 
     [VaultColumn("email-verified")]
-    public bool EmailVerified { get; set; }
+    public bool EmailVerified { get; set; } = false;
 
     [VaultColumn("email-verification-token", nullable: true)]
     public string EmailVerificationToken { get; set; } = "";
 
-    public async Task<List<AccountVault>> OnCreateAsync(IServiceProvider serviceProvider)
-    {
-        var passwordHasher = serviceProvider.GetRequiredService<IPasswordHasher>();
-        var account = new AccountVault() { Username = "admin", PasswordHash = passwordHasher.Hash("admin"), Email = "admin@admin.com" };
-        return await Task.FromResult(new List<AccountVault> { account });
-    }
 }

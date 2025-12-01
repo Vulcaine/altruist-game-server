@@ -28,10 +28,7 @@ public class PlayerWorldSyncSystem
         _characterPrefabVault = characterPrefabVault;
     }
 
-    /// <summary>
-    /// Every 30 seconds, persist character prefab snapshots to storage.
-    /// </summary>
-    [Cycle("*/30 * * * * *")]
+    [Cycle(CronPresets.EveryMinute)]
     public async Task PersistCharacterPositionsSnapshot()
     {
         foreach (var world in _gameWorldOrganizer.GetAllWorlds())
