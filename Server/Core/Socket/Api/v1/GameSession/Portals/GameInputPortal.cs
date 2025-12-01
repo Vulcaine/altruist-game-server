@@ -39,11 +39,11 @@ public class GameInputPortal : BaseSessionPortal
         if (clientSession == null)
             return;
 
-        var characterSession = await clientSession.GetContext<CharacterSessionContext>(clientId);
+        var characterSession = clientSession.GetContext<CharacterSessionContext>(clientId);
         if (characterSession == null)
             return;
 
-        var playerSession = await clientSession.GetContext<GameSessionContext>(characterSession.AccountId);
+        var playerSession = clientSession.GetContext<GameSessionContext>(characterSession.AccountId);
         if (playerSession == null)
             return;
 

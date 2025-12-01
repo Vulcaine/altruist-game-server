@@ -1,3 +1,4 @@
+
 using Altruist;
 using Altruist.Gaming.ThreeD;
 using Altruist.Numerics;
@@ -5,86 +6,111 @@ using Altruist.Persistence;
 
 using Server.Packet;
 
-namespace Server.GameSession;
-
-/// <summary>
-/// Periodic world sync: saving character snapshots and broadcasting player positions.
-/// Driven by the engine via [Cycle] attributes.
-/// </summary>
-[Service]
-public class PlayerWorldSyncSystem
+namespace Server.GameSystems
 {
-    private readonly IGameWorldOrganizer3D _gameWorldOrganizer;
-    private readonly ISpatialBroadcastService3D _spatialBroadcastService;
-    private readonly IPrefabVault<CharacterPrefab> _characterPrefabVault;
-
-    public PlayerWorldSyncSystem(
-        IGameWorldOrganizer3D gameWorldOrganizer,
-        ISpatialBroadcastService3D spatialBroadcastService,
-        IPrefabVault<CharacterPrefab> characterPrefabVault)
+    /// <summary>
+    /// Periodic world sync: saving character snapshots and broadcasting player positions.
+    /// Driven by the engine via [Cycle] attributes.
+    /// </summary>
+    [Service]
+    public class PlayerWorldSyncSystem
     {
-        _gameWorldOrganizer = gameWorldOrganizer;
-        _spatialBroadcastService = spatialBroadcastService;
-        _characterPrefabVault = characterPrefabVault;
-    }
+        private readonly IGameWorldOrganizer3D _gameWorldOrganizer;
+        private readonly ISpatialBroadcastService3D _spatialBroadcastService;
+        private readonly IPrefabVault<CharacterPrefab> _characterPrefabVault;
+        private readonly IGameSessionService _sessionService;
 
-    [Cycle(CronPresets.EveryMinute)]
-    public async Task PersistCharacterPositionsSnapshot()
-    {
-        foreach (var world in _gameWorldOrganizer.GetAllWorlds())
+        public PlayerWorldSyncSystem(
+            IGameWorldOrganizer3D gameWorldOrganizer,
+            ISpatialBroadcastService3D spatialBroadcastService,
+            IPrefabVault<CharacterPrefab> characterPrefabVault,
+            IGameSessionService sessionService)
         {
-            var allCharacterPrefabs = world.FindAllObjects<CharacterPrefab>();
+            _gameWorldOrganizer = gameWorldOrganizer;
+            _spatialBroadcastService = spatialBroadcastService;
+            _characterPrefabVault = characterPrefabVault;
+            _sessionService = sessionService;
+        }
 
-            foreach (var characterPrefab in allCharacterPrefabs)
+        /// <summary>
+        /// Persist character state snapshot periodically (e.g. once per minute).
+        /// </summary>
+        [Cycle(CronPresets.EveryMinute)]
+        public async Task PersistCharacterPositionsSnapshot()
+        {
+            foreach (var world in _gameWorldOrganizer.GetAllWorlds())
             {
-                var characterVault = await characterPrefab.Character.LoadAsync();
-                if (characterVault == null)
-                    continue;
+                var allCharacterPrefabs = world.FindAllObjects<CharacterPrefab>();
 
-                await _characterPrefabVault.SaveAsync(characterPrefab);
+                foreach (var characterPrefab in allCharacterPrefabs)
+                {
+                    var characterVault = await characterPrefab.Character.LoadAsync();
+                    if (characterVault == null)
+                        continue;
+
+                    await _characterPrefabVault.SaveAsync(characterPrefab);
+                }
             }
         }
-    }
 
-    /// <summary>
-    /// Every engine tick, broadcast player positions and orientations to nearby clients.
-    /// </summary>
-    [Cycle]
-    public async Task UpdatePlayerPosition()
-    {
-        foreach (var world in _gameWorldOrganizer.GetAllWorlds())
+        /// <summary>
+        /// Every engine tick, broadcast player positions and orientations to nearby clients.
+        /// Uses per-session snapshot caching to avoid sending redundant updates.
+        /// </summary>
+        [Cycle]
+        public async Task UpdatePlayerPosition()
         {
-            var allCharacterPrefabs = world.FindAllObjects<CharacterPrefab>();
-
-            foreach (var characterPrefab in allCharacterPrefabs)
+            foreach (var world in _gameWorldOrganizer.GetAllWorlds())
             {
-                var characterVault = await characterPrefab.Character.LoadAsync();
-                if (characterVault == null)
-                    continue;
+                var allCharacterPrefabs = world.FindAllObjects<CharacterPrefab>();
 
-                var position = characterPrefab.GetCurrentPosition();
-                var (yaw, pitch, roll) = characterPrefab.GetCurrentYawPitchRoll();
+                foreach (var characterPrefab in allCharacterPrefabs)
+                {
+                    var characterVault = await characterPrefab.Character.LoadAsync();
+                    if (characterVault == null)
+                        continue;
 
-                var update = new UpdateClientPositionAndOrientation(
-                    position.X,
-                    position.Y,
-                    position.Z,
-                    yaw,
-                    pitch,
-                    roll,
-                    characterPrefab.StateFlags
-                );
+                    var clientId = characterPrefab.ClientId;
+                    if (string.IsNullOrWhiteSpace(clientId))
+                        continue;
 
-                var cell = new IntVector3(
-                    (int)position.X,
-                    (int)position.Y,
-                    (int)position.Z
-                );
+                    var session = _sessionService.GetSession(clientId);
+                    if (session == null)
+                        continue;
 
-                _ = _spatialBroadcastService.SpatialBroadcast<CharacterPrefab>(
-                    world.Index.Index,
-                    cell,
-                    update);
+                    var position = characterPrefab.GetCurrentPosition();
+                    var (yaw, pitch, roll) = characterPrefab.GetCurrentYawPitchRoll();
+
+                    var newSnapshot = new UpdateClientPositionAndOrientation(
+                        position.X,
+                        position.Y,
+                        position.Z,
+                        yaw,
+                        pitch,
+                        roll,
+                        characterPrefab.StateFlags
+                    );
+
+                    UpdateClientPositionAndOrientation? lastSnapshot = session.GetContext<UpdateClientPositionAndOrientation?>(clientId);
+
+                    if (lastSnapshot.HasValue && lastSnapshot.Value.Equals(newSnapshot))
+                    {
+                        continue;
+                    }
+
+                    session.SetContext(clientId, newSnapshot);
+
+                    var cell = new IntVector3(
+                        (int)position.X,
+                        (int)position.Y,
+                        (int)position.Z
+                    );
+
+                    _ = _spatialBroadcastService.SpatialBroadcast<CharacterPrefab>(
+                        world.Index.Index,
+                        cell,
+                        newSnapshot);
+                }
             }
         }
     }

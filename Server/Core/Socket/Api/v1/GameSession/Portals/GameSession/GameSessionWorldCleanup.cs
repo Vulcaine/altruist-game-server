@@ -29,7 +29,7 @@ public class GameSessionWorldCleanup : IGameSessionWorldCleanup
             return;
 
         var characterSession =
-            await clientSession.GetContext<CharacterSessionContext>(clientId);
+         clientSession.GetContext<CharacterSessionContext>(clientId);
 
         if (characterSession == null)
             return;

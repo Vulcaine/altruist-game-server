@@ -23,8 +23,13 @@ namespace Server.Packet
     }
 
     [MessagePackObject]
-    public struct UpdateClientPositionAndOrientation : IPacketBase
+    public struct UpdateClientPositionAndOrientation :
+        IPacketBase,
+        IEquatable<UpdateClientPositionAndOrientation>
     {
+        private const float PositionEpsilon = 0.01f; // 1 cm
+        private const float RotationEpsilon = 0.5f;  // 0.5 degrees
+
         [Key(0)]
         [JsonPropertyName("x")]
         public float X { get; set; }
@@ -73,5 +78,51 @@ namespace Server.Packet
             Roll = roll;
             State = state;
         }
+
+        // ----------------- equality with thresholds -----------------
+
+        public bool Equals(UpdateClientPositionAndOrientation other)
+        {
+            // If state flags differ, treat as different regardless of position/rotation.
+            if (State != other.State)
+                return false;
+
+            return
+                MathF.Abs(X - other.X) <= PositionEpsilon &&
+                MathF.Abs(Y - other.Y) <= PositionEpsilon &&
+                MathF.Abs(Z - other.Z) <= PositionEpsilon &&
+                MathF.Abs(Yaw - other.Yaw) <= RotationEpsilon &&
+                MathF.Abs(Pitch - other.Pitch) <= RotationEpsilon &&
+                MathF.Abs(Roll - other.Roll) <= RotationEpsilon;
+        }
+
+        public override bool Equals(object? obj) =>
+            obj is UpdateClientPositionAndOrientation other && Equals(other);
+
+        public override int GetHashCode()
+        {
+            // Hash based on quantized values so it's at least consistent
+            var hash = new HashCode();
+
+            hash.Add(MathF.Round(X, 2));
+            hash.Add(MathF.Round(Y, 2));
+            hash.Add(MathF.Round(Z, 2));
+            hash.Add(MathF.Round(Yaw, 1));
+            hash.Add(MathF.Round(Pitch, 1));
+            hash.Add(MathF.Round(Roll, 1));
+            hash.Add(State);
+
+            return hash.GetHashCode();
+        }
+
+        public static bool operator ==(
+            UpdateClientPositionAndOrientation left,
+            UpdateClientPositionAndOrientation right)
+            => left.Equals(right);
+
+        public static bool operator !=(
+            UpdateClientPositionAndOrientation left,
+            UpdateClientPositionAndOrientation right)
+            => !left.Equals(right);
     }
 }

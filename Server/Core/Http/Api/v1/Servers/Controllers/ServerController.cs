@@ -70,7 +70,7 @@ public sealed class ServerController : BaseSessionController
             return BadRequest("Server is full.");
         }
 
-        var existingSession = await session.GetContext<PlayerServerSessionContext>(accountId);
+        var existingSession = session.GetContext<PlayerServerSessionContext>(accountId);
 
         if (existingSession != null)
         {
@@ -82,7 +82,7 @@ public sealed class ServerController : BaseSessionController
 
         var serverSession = new PlayerServerSessionContext(accountId, existingServer.StorageId);
 
-        await session.SetContext(accountId, serverSession);
+        session.SetContext(accountId, serverSession);
 
         var response = new JoinServerResponse(
             new AvailableServerInfo(existingServer, existingServer.Capacity - sessionCountForServer)

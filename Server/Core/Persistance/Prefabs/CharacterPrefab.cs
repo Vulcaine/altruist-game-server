@@ -22,9 +22,6 @@ public class CharacterPrefab : WorldObjectPrefab3D
     public IPrefabHandle<CharacterVault> Character { get; set; } = default!;
 
     [VaultIgnore]
-    public string ClientId { get; set; } = "";
-
-    [VaultIgnore]
     public ISlotPalette? Slots { get; private set; }
 
     [VaultIgnore]

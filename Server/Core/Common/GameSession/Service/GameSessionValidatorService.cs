@@ -79,7 +79,7 @@ public sealed class GameSessionValidatorService
             return new HttpJoinValidationResult(false, core.Error, core.Server, core.Character, core.World);
 
         var playerSession = new GameSessionContext(characterId, accountId, serverId);
-        await session.SetContext(characterId, playerSession);
+        session.SetContext(characterId, playerSession);
 
         return new HttpJoinValidationResult(true, null, core.Server, core.Character, core.World);
     }
