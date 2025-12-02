@@ -64,26 +64,21 @@ public sealed class GameCharacterSessionService : IGameCharacterSessionService
     {
         var storageId = characterDynamic.StorageId;
 
-        // Remove existing instance if already present
         var existingWorldObject = startWorld.FindObject(storageId);
         if (existingWorldObject != null)
             startWorld.DestroyObject(existingWorldObject);
 
-        // Construct prefab and apply persisted character data
         var characterPrefab = _characterPrefabVault.Construct();
         characterPrefab.ClientId = clientId;
         characterPrefab.Character.Apply(characterDynamic);
 
-        // Spawn into world and obtain PhysX body
         var body = await startWorld.SpawnDynamicObject(characterPrefab, withId: storageId);
 
-        // Wire movement for this character based on its properties
         if (characterDynamic is CharacterBase characterBase && body is IPhysxBody3D physxBody)
         {
             characterPrefab.SetupMovement(characterBase, physxBody);
         }
 
-        // Persist prefab state if needed
         await _characterPrefabVault.SaveAsync(characterPrefab);
     }
 
