@@ -85,7 +85,7 @@ public sealed class GameSessionController : BaseSessionController
             return BadRequest("You are not logged in.");
         }
 
-        var playerServerSessionContext = session.GetContext<PlayerServerSessionContext>(server.StorageId);
+        var playerServerSessionContext = session.GetContext<PlayerServerSessionContext>(accountId);
 
         if (playerServerSessionContext == null)
         {

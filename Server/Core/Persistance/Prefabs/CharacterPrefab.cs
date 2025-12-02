@@ -183,19 +183,44 @@ public class CharacterPrefab : WorldObjectPrefab3D
 
     private static (float Yaw, float Pitch, float Roll) ToYawPitchRoll(Quaternion q)
     {
-        q = Quaternion.Normalize(q);
+        const float epsilon = 1e-6f;
 
+        // Handle zero quaternion: treat as identity (no rotation)
+        float lenSq = q.LengthSquared();
+        if (lenSq < epsilon)
+        {
+            // You can change this to whatever default you want,
+            // but zero yaw/pitch/roll is usually safe.
+            return (0f, 0f, 0f);
+        }
+
+        // Normalize *safely* if not already unit
+        if (MathF.Abs(lenSq - 1f) > epsilon)
+        {
+            float invLen = 1f / MathF.Sqrt(lenSq);
+            q.X *= invLen;
+            q.Y *= invLen;
+            q.Z *= invLen;
+            q.W *= invLen;
+        }
+
+        // Yaw (Y axis)
         float siny_cosp = 2f * (q.W * q.Y + q.Z * q.X);
         float cosy_cosp = 1f - 2f * (q.Y * q.Y + q.Z * q.Z);
         float yaw = MathF.Atan2(siny_cosp, cosy_cosp);
 
+        // Pitch (X axis)
         float sinp = 2f * (q.W * q.X - q.Z * q.Y);
-        float pitch;
-        if (MathF.Abs(sinp) >= 1f)
-            pitch = MathF.CopySign(MathF.PI / 2f, sinp);
-        else
-            pitch = MathF.Asin(sinp);
 
+        // Clamp sinp to [-1, 1] to avoid NaN from Asin due to FP error
+        if (sinp > 1f)
+            sinp = 1f;
+        else if (sinp < -1f)
+            sinp = -1f;
+
+        float pitch = MathF.Asin(sinp);
+
+        // Roll (Z axis)
         float sinr_cosp = 2f * (q.W * q.Z + q.X * q.Y);
         float cosr_cosp = 1f - 2f * (q.Z * q.Z + q.X * q.X);
         float roll = MathF.Atan2(sinr_cosp, cosr_cosp);

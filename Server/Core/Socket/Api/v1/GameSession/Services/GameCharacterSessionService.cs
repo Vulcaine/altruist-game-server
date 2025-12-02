@@ -1,11 +1,10 @@
 using Altruist;
+using Altruist.Gaming.Movement.ThreeD;
+using Altruist.Gaming.ThreeD;
 using Altruist.Persistence;
 
-using Altruist.Gaming.Movement.ThreeD;
-
-using Server.Persistence;
 using Server.Packet;
-using Altruist.Gaming.ThreeD;
+using Server.Persistence;
 
 namespace Server.GameSession;
 
@@ -50,7 +49,7 @@ public sealed class GameCharacterSessionService : IGameCharacterSessionService
 
         await PrepareCharacterInWorldAsync(clientId, character, startWorld);
         await BroadcastCharacterJoinedAsync(character);
-        await BindCharacterSessionContextAsync(clientSession, accountId, validation);
+        BindCharacterSessionContext(clientSession, accountId, validation);
 
         return result;
     }
@@ -94,7 +93,7 @@ public sealed class GameCharacterSessionService : IGameCharacterSessionService
         await _router.Broadcast.SendAsync(packet);
     }
 
-    private Task BindCharacterSessionContextAsync(
+    private void BindCharacterSessionContext(
         IGameSession clientSession,
         string accountId,
         dynamic validation)
@@ -109,6 +108,6 @@ public sealed class GameCharacterSessionService : IGameCharacterSessionService
             server.StorageId,
             world.Index.Index);
 
-        return clientSession.SetContext(character.StorageId, context);
+        clientSession.SetContext(character.StorageId, context);
     }
 }
