@@ -4,7 +4,8 @@ using Altruist.UORM;
 
 namespace Server.Persistence;
 
-[Vault("servers")]
+[Vault("servers", Keyspace: "server")]
+[VaultUniqueKey("name", "host", "port")]
 public class GameServerVault : VaultModel
 {
     [VaultColumn("name")]

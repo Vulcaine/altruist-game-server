@@ -5,7 +5,7 @@ using Server.Data;
 
 namespace Server.Persistence;
 
-[Vault("effect")]
+[Vault("effect", Keyspace: "gameplay")]
 public class EffectVault : VaultModel
 {
     [VaultColumn("effect-id")]

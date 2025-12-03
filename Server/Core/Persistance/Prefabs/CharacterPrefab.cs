@@ -14,7 +14,7 @@ using Server.Gameplay;
 using Server.Packet;
 using Server.Persistence;
 
-[Prefab("character")]
+[Prefab("character", Keyspace: "player")]
 [WorldObject("character")]
 public class CharacterPrefab : WorldObjectPrefab3D
 {

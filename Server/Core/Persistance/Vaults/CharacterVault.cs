@@ -56,11 +56,11 @@ public abstract class CharacterBase : VaultModel
     }
 }
 
-[Vault("character-template")]
+[Vault("character-template", Keyspace: "player")]
+[VaultUniqueKey("template-code")]
 public class CharacterTemplateVault : CharacterBase
 {
     [VaultColumn("template-code")]
-    [VaultUniqueColumn]
     public string TemplateCode { get; set; } = string.Empty;
 
     public Task<List<CharacterTemplateVault>> OnCreateAsync(IServiceProvider serviceProvider)
@@ -75,7 +75,7 @@ public class CharacterTemplateVault : CharacterBase
     }
 }
 
-[Vault("character")]
+[Vault("character", Keyspace: "player")]
 public class CharacterVault : CharacterBase
 {
     [VaultColumn("template-code")]
@@ -109,12 +109,12 @@ public class CharacterVault : CharacterBase
     public float Roll { get; set; }
 }
 
-[Vault("npc-template")]
+[Vault("npc-template", Keyspace: "player")]
+[VaultUniqueKey("template-code")]
 public class NPCVault : VaultModel
 {
     // Unique template code, e.g. "orc_warrior_01"
     [VaultColumn("template-code")]
-    [VaultUniqueColumn]
     public string TemplateCode { get; set; } = string.Empty;
 
     // Displayed name, e.g. "Orc Warrior"

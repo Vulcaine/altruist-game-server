@@ -5,7 +5,7 @@ using Server.Gameplay;
 
 namespace Server.Persistence;
 
-[Vault("slot-palette")]
+[Vault("slot-palette", Keyspace: "player")]
 public class SlotPaletteVault : VaultModel
 {
     [VaultColumn("character")]

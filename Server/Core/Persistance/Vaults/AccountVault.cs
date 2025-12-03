@@ -3,17 +3,17 @@ using Altruist.UORM;
 
 namespace Server.Persistence;
 
-[Vault("account")]
+[Vault("account", Keyspace: "account")]
+[VaultUniqueKey("username")]
+[VaultUniqueKey("email")]
 public class AccountVault : AccountModel
 {
-    [VaultUniqueColumn]
     [VaultColumn("username")]
     public string Username { get; set; } = "";
 
     [VaultColumn("password-hash")]
     public string PasswordHash { get; set; } = "";
 
-    [VaultUniqueColumn]
     [VaultColumn("email")]
     public string Email { get; set; } = "";
 
