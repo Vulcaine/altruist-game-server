@@ -109,7 +109,7 @@ public class AttackInputBindingVault : VaultModel
     /// just keep one row per input globally.
     /// </summary>
     [VaultColumn("combo-profile-id", nullable: true)]
-    [VaultForeignKey(typeof(AttackComboProfileVault), nameof(StorageId))]
+    [VaultForeignKey(typeof(ComboGraphSettings), nameof(StorageId))]
     public string? ComboProfileId { get; set; }
 
     /// <summary>
@@ -134,7 +134,7 @@ public class AttackComboTransitionVault : VaultModel
     /// Optional combo profile this transition belongs to.
     /// </summary>
     [VaultColumn("combo-profile-id", nullable: true)]
-    [VaultForeignKey(typeof(AttackComboProfileVault), nameof(StorageId))]
+    [VaultForeignKey(typeof(ComboGraphSettings), nameof(StorageId))]
     public string? ComboProfileId { get; set; }
 
     /// <summary>
@@ -160,9 +160,9 @@ public class AttackComboTransitionVault : VaultModel
     public int Priority { get; set; } = 0;
 }
 
-[Vault("attack-combo-profile", Keyspace: "gameplay")]
+[Vault("combo-graph-settings", Keyspace: "settings")]
 [VaultUniqueKey("name")]
-public class AttackComboProfileVault : VaultModel
+public class ComboGraphSettings : VaultModel
 {
     [VaultColumn("name")]
     public string Name { get; set; } = string.Empty;
@@ -172,14 +172,6 @@ public class AttackComboProfileVault : VaultModel
     /// </summary>
     [VaultColumn("description", nullable: true)]
     public string? Description { get; set; }
-
-    /// <summary>
-    /// The default "entry" move for this combo graph.
-    /// Can be null if you want a purely input-driven start.
-    /// </summary>
-    [VaultColumn("entry-attack-move-id", nullable: true)]
-    [VaultForeignKey(typeof(AttackMoveVault), nameof(StorageId))]
-    public string? EntryAttackMoveId { get; set; }
 
     /// <summary>
     /// After this many seconds of no combo input, reset to entry / idle.
