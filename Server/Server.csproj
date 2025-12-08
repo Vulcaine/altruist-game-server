@@ -6,6 +6,8 @@
     <ProjectReference Include="..\libs\Altruist\Altruist\Gaming\Movement\Movement.csproj" />
     <ProjectReference Include="..\libs\Altruist\Altruist\Web\Web.csproj" />
     <ProjectReference Include="..\libs\Altruist\Altruist\Postgres\Postgres.csproj" />
+
+    <ProjectReference Include="..\libs\Altruist\Altruist\Dashboard\Dashboard.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

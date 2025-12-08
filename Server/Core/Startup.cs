@@ -5,47 +5,16 @@ using Altruist.Gaming.ThreeD;
 using Altruist.Numerics;
 using Altruist.ThreeD.Numerics;
 
-using BepuPhysics;
-using BepuPhysics.Collidables;
-
-using BepuUtilities.Memory;
-
-[Service]
-public sealed class WorldTerrainInitializer
-{
-    private readonly IHeightmapLoader3D _heightmapLoader;
-    private readonly BufferPool _bufferPool;
-
-    public WorldTerrainInitializer(
-        IHeightmapLoader3D heightmapLoader,
-        BufferPool bufferPool)
-    {
-        _heightmapLoader = heightmapLoader;
-        _bufferPool = bufferPool;
-    }
-
-    public Mesh LoadTerrain(HeightmapData heightmapData)
-    {
-        var mesh = _heightmapLoader.LoadHeightmapMesh(heightmapData, _bufferPool);
-        return mesh;
-    }
-}
-
-
 [AltruistModule]
 public static class ServerModule
 {
-    private sealed class Plane : WorldObject3D
-    {
-        public Plane(Transform3D transform, string zoneId = "", string? archetype = null)
-            : base(transform, zoneId, archetype)
-        {
-        }
-    }
-
     [AltruistModuleLoader]
-    public static void Initialize(IGameWorldOrganizer3D worldOrganizer, WorldTerrainInitializer worldTerrainInitializer)
+    public static void Initialize(
+        IGameWorldOrganizer3D worldOrganizer,
+        IHeightmapLoader heightmapLoader)
     {
+        var heightmapFile = "Resources/Heightmaps/Land_heightmap.hmap";
+        var heightmapData = heightmapLoader.RAW.LoadHeightmap(heightmapFile);
         var allWorlds = worldOrganizer.GetAllWorlds();
 
         foreach (var world in allWorlds)
@@ -64,10 +33,7 @@ public static class ServerModule
                 size: size
             );
 
-            var mesh = worldTerrainInitializer.LoadTerrain(
-                world.HeightmapData
-            );
-            world.SpawnStaticObject(mesh);
+            world.SpawnStaticObject(new Terrain(transform, heightmapData));
         }
     }
 }

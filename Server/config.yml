@@ -1,4 +1,7 @@
 altruist:
+  dashboard:
+    enabled: true
+
   environment:
     mode: "3D"
 

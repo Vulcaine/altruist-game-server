@@ -28,16 +28,18 @@ public class GameSessionWorldCleanup : IGameSessionWorldCleanup
         if (clientSession == null)
             return;
 
-        var characterSession =
-         clientSession.GetContext<CharacterSessionContext>(clientId);
+        var characterSessions = clientSession.FindAllContexts<CharacterSessionContext>();
 
-        if (characterSession == null)
+        if (characterSessions.Count() == 0)
             return;
 
-        var characterWorld = _gameWorldOrganizer.GetWorld(characterSession.WorldIndex);
-        if (characterWorld == null)
-            return;
+        foreach (var characterSession in characterSessions)
+        {
+            var characterWorld = _gameWorldOrganizer.GetWorld(characterSession.WorldIndex);
+            if (characterWorld == null)
+                return;
 
-        characterWorld.DestroyObject(characterSession.CharacterId);
+            characterWorld.DestroyObject(characterSession.CharacterId);
+        }
     }
 }
