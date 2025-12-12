@@ -23,7 +23,7 @@ public static class ServerModule
             var origin = new IntVector3(0, 0, 0);
             var size = new Vector3(
                 x: worldSize.X,
-                y: 5f,
+                y: heightmapData.HeightScale,
                 z: worldSize.Z
             );
 
